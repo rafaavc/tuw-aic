@@ -1,15 +1,15 @@
 
 ![DSG](./docs/dsg_logo.png)
 
-# Advanced Internet Computing WS 2022 - Group x Topic x
-
-This template is intended to serve as an *example* on how you might want to structure the README when submitting your project.
-
-**Important**: The specific subdirectories are *not* meant to be extended but to serve as an example on how to write a `Dockerfile` and a `docker-compose.yml` file. Your first task should be to replace them with your own.
+# Advanced Internet Computing WS 2022 - Group 3 Topic 1
 
 ## Team
 
-TODO
+* **André Mategka** (Coordinator): e11809614@student.tuwien.ac.at
+* **Philipp-Lorenz Glaser**: philipp-lorenz.glaser@tuwien.ac.at
+* **Philipp Ginter**: e11704322@student.tuwien.ac.at
+* **Rafael Cristino**: e12202238@student.tuwien.ac.at
+* **Xavier Pisco**: e12206635@student.tuwien.ac.at
 
 ## Overview
 

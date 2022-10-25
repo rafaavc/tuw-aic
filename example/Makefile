@@ -3,13 +3,13 @@
 # Some examples below
 
 start:
-	docker compose build && docker compose up -d
+	docker-compose build && docker-compose up -d
 
 restart:
-	docker compose restart
+	docker-compose restart
 
 build:
-	docker compose build
+	docker-compose build
 
 purge:
-	docker compose down -v --rmi all --remove-orphans
+	docker-compose down -v --rmi all --remove-orphans
