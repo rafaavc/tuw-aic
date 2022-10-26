@@ -3,7 +3,7 @@
 # Some examples below
 
 start:
-	docker compose build && docker compose up -d
+	docker compose build && docker compose up
 
 restart:
 	docker compose restart

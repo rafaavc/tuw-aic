@@ -1,15 +1,8 @@
 plugins {
     id 'java'
-    id 'application'
 }
 
-def mainClassName = 'aic.g3t1.producer.Main'
-
-application {
-    mainClass = mainClassName
-}
-
-group 'aic.g3t1.producer'
+group 'aic.g3t1.common'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -21,24 +14,8 @@ dependencies {
     implementation group: 'org.apache.kafka', name: 'kafka_2.13', version: '3.3.1'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.3'
 
-    implementation project(':common')
-
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
-}
-
-jar {
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-
-    from {
-        configurations.compileClasspath.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
 }
 
 test {

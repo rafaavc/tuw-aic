@@ -13,7 +13,12 @@
 
 ## Overview
 
-TODO
+### Directory structure
+
+- **common** - code that can be used by other components
+- **consumer** - example kafka consumer component
+- **producer** - example kafka producer component
+- **example** - initial repository structure given by course organizers
 
 ## Architecture
 
@@ -25,7 +30,13 @@ TODO
 
 ## How to run
 
-TODO
+Using regular docker commands. Optionally the Makefile can be used.
+
+```shell
+docker compose build && docker compose up
+```
+
+
 
 ## How to debug
 

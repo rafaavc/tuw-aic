@@ -1,22 +1,15 @@
 package aic.g3t1.producer;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
+import aic.g3t1.common.kafka.ProducerFactory;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import java.util.Properties;
-
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        var properties = new Properties();
-        properties.setProperty("bootstrap.servers", System.getenv("KAFKA_BOOTSTRAP_SERVER"));
-        properties.setProperty("linger.ms", String.valueOf(1)); // time to wait before sending messages out to Kafka
-        properties.setProperty("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        properties.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+    public static void main(String[] args) throws Exception {
+        var producer = ProducerFactory.createProducer();
+
 
         String topic = "topic1";
         System.out.printf("Starting to publish on topic '%s'.\n", topic);
-
-        var producer = new KafkaProducer<String, String>(properties);
 
         int i = 0;
         while (i++ < 1000) {
