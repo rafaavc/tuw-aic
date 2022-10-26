@@ -6,7 +6,8 @@ node_modules/
 venv/
 env/
 
-
+.gradle/
+build/
 
 .DS_Store
 .DS_Store?
