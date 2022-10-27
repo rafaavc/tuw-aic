@@ -6,6 +6,7 @@ WORKDIR /opt
 RUN wget https://services.gradle.org/distributions/gradle-7.4-bin.zip
 
 COPY . /app
+COPY ../taxi_data /app
 
 WORKDIR /app/producer
 
