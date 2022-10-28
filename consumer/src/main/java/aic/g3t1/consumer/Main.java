@@ -1,6 +1,6 @@
 package aic.g3t1.consumer;
 
-import aic.g3t1.common.taxiPosition.TaxiPosition;
+import aic.g3t1.common.taxiposition.TaxiPosition;
 import aic.g3t1.common.kafka.ConsumerFactory;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

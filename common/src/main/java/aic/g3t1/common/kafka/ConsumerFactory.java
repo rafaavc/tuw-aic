@@ -1,6 +1,6 @@
 package aic.g3t1.common.kafka;
 
-import aic.g3t1.common.taxiPosition.TaxiPosition;
+import aic.g3t1.common.taxiposition.TaxiPosition;
 import aic.g3t1.common.environment.EnvironmentVariables;
 import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -15,7 +15,7 @@ public class ConsumerFactory {
         properties.setProperty("enable.auto.commit", "true");
         properties.setProperty("auto.commit.interval.ms", "1000");
         properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.setProperty("value.deserializer", "aic.g3t1.common.position.TaxiPositionDeserializer");
+        properties.setProperty("value.deserializer", "aic.g3t1.common.taxiposition.TaxiPositionDeserializer");
 
         return new KafkaConsumer<>(properties);
     }
