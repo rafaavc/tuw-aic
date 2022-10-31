@@ -19,6 +19,7 @@
 - **consumer** - example kafka consumer component
 - **producer** - example kafka producer component
 - **example** - initial repository structure given by course organizers
+- **taxi_data** - folder containing all the data from the taxis, one file per taxi
 
 ## Architecture
 
@@ -36,7 +37,9 @@ Using regular docker commands. Optionally the Makefile can be used.
 docker compose build && docker compose up
 ```
 
+In order to change the data, change the files inside the taxi_data to the ones you desire.
 
+In order to change the speed, change the speed variable in the Producer class inside the producer package.
 
 ## How to debug
 

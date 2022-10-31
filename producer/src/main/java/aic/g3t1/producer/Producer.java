@@ -20,10 +20,9 @@ import java.util.concurrent.TimeUnit;
 public class Producer {
     private final String topic = "taxi";
     private final String folder = "../taxi_data/";
-    private List<TaxiPosition> taxiPositions = new ArrayList<>();
-    private static int positionsSent = 0;
-    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-    private KafkaProducer<String, TaxiPosition> producer;
+    private final int speed = 1;
+    private final List<TaxiPosition> taxiPositions = new ArrayList<>();
+    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     public void start() throws Exception {
         try {
@@ -34,7 +33,7 @@ public class Producer {
         }
 
         try {
-            this.sendTaxiData(2);
+            this.sendTaxiData(speed);
         } catch (MissingEnvironmentVariableException ex) {
             System.out.println("Couldn't send the data via Kafka");
             throw ex;
@@ -45,10 +44,9 @@ public class Producer {
      * Send the taxi data with an interval directly related to the real intervals of the data
      *
      * @param speed Speed of sending data compared to the real speed. Value of 10 means it is 10x faster than real time
-     * @throws MissingEnvironmentVariableException
      */
     private void sendTaxiData(double speed) throws MissingEnvironmentVariableException {
-        producer = ProducerFactory.createProducer();
+        KafkaProducer<String, TaxiPosition> producer = ProducerFactory.createProducer();
 
         System.out.println("Starting to publish taxi data on topic " + topic);
 

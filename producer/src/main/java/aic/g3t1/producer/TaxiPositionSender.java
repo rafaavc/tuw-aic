@@ -4,16 +4,15 @@ import aic.g3t1.common.taxiposition.TaxiPosition;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class TaxiPositionSender implements Runnable {
-    private List<TaxiPosition> taxiPositions = new ArrayList<>();
+    private final List<TaxiPosition> taxiPositions;
     private static int positionsSent = 0;
-    private ScheduledExecutorService executor;
-    private KafkaProducer<String, TaxiPosition> producer;
-    private String topic;
+    private final ScheduledExecutorService executor;
+    private final KafkaProducer<String, TaxiPosition> producer;
+    private final String topic;
 
     public TaxiPositionSender(List<TaxiPosition> taxiPositions, ScheduledExecutorService executor, KafkaProducer<String, TaxiPosition> producer, String topic) {
         this.taxiPositions = taxiPositions;
