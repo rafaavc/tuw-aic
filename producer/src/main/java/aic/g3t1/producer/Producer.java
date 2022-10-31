@@ -3,6 +3,7 @@ package aic.g3t1.producer;
 import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
 import aic.g3t1.common.kafka.ProducerFactory;
 import aic.g3t1.common.taxiposition.TaxiPosition;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.io.FileNotFoundException;
@@ -12,13 +13,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
-public class Producer {
+public class Producer implements Runnable {
     private final String topic = "taxi";
     private final String folder = "../taxi_data/";
     private List<TaxiPosition> taxiPositions = new ArrayList<>();
+    private static int positionsSent = 0;
+    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);;
+    private KafkaProducer<String, TaxiPosition> producer;
+    private ScheduledFuture scheduledTask;
 
-    public void run() throws Exception {
+    public void start() throws Exception {
         try {
             this.readTaxiData(folder);
         } catch (IOException ex) {
@@ -40,49 +49,11 @@ public class Producer {
      * @throws MissingEnvironmentVariableException
      */
     private void sendTaxiData(double speed) throws MissingEnvironmentVariableException {
-        var producer = ProducerFactory.createProducer();
+        producer = ProducerFactory.createProducer();
 
         System.out.println("Starting to publish taxi data on topic " + topic);
 
-        int i = 0;
-        var lastSentPositionTimestamp = new Date(1970, 1, 1);
-        long timeElapsedSinceLastSent = 0;
-        long previousTime = 0;
-
-        while(i < taxiPositions.size()) {
-            var nextPositionTimestamp = taxiPositions.get(i).getTimestamp();
-            var timeBetweenPositions = nextPositionTimestamp.getTime() - lastSentPositionTimestamp.getTime();
-
-            var currentTime = System.currentTimeMillis();
-            timeElapsedSinceLastSent += currentTime - previousTime;
-            previousTime = currentTime;
-
-            if (timeElapsedSinceLastSent >= timeBetweenPositions / speed) {
-                while (i < taxiPositions.size()) {
-                    var nextPosition = taxiPositions.get(i);
-                    if (nextPosition.getTimestamp().after(nextPositionTimestamp)) {
-                        break;
-                    }
-                    var record = new ProducerRecord<>(topic, String.valueOf(i), nextPosition);
-                    producer.send(record);
-                    i++;
-                }
-                System.out.println("Sent positions with timestamp = " + nextPositionTimestamp);
-                timeElapsedSinceLastSent = 0;
-                lastSentPositionTimestamp = nextPositionTimestamp;
-            } else {
-                try {
-                    Thread.sleep(Math.round((timeBetweenPositions - timeElapsedSinceLastSent) / speed));
-                } catch (InterruptedException e) {
-                    System.out.println("Error trying to sleep");
-                }
-            }
-
-        }
-
-        System.out.println("Finished publishing all the data. Disconnecting.");
-
-        producer.close();
+        scheduledTask = executor.scheduleAtFixedRate(this, 0, Math.round(1000/speed), TimeUnit.MILLISECONDS);
     }
 
     private void readTaxiData(String folder) throws IOException {
@@ -122,5 +93,26 @@ public class Producer {
         System.out.println("Sorting all the taxi data by time");
         mergeList.sort(TaxiPosition::compareTo);
         return mergeList;
+    }
+
+    @Override
+    public void run() {
+        var firstPositionToSend = taxiPositions.get(positionsSent);
+        while (positionsSent < taxiPositions.size()) {
+            var nextPosition = taxiPositions.get(positionsSent);
+            if (nextPosition.getTimestamp().after(firstPositionToSend.getTimestamp())) {
+                break;
+            }
+            var record = new ProducerRecord<>(topic, String.valueOf(positionsSent), nextPosition);
+            producer.send(record);
+            positionsSent++;
+        }
+        System.out.println("Sent positions with timestamp = " + firstPositionToSend.getTimestamp());
+
+        if (positionsSent >= taxiPositions.size()) {
+            System.out.println("All available taxi positions were sent, closing.");
+            producer.close();
+            scheduledTask.cancel(false);
+        }
     }
 }
