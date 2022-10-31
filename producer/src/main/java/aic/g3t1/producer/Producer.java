@@ -11,38 +11,73 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Producer {
     private final String topic = "taxi";
+    private final String folder = "../taxi_data/";
     private List<TaxiPosition> taxiPositions = new ArrayList<>();
 
     public void run() throws Exception {
         try {
-            this.readTaxiData("../taxi_data/");
+            this.readTaxiData(folder);
         } catch (IOException ex) {
             System.out.println("Couldn't read the taxi data");
             throw ex;
         }
 
         try {
-            this.sendTaxiData();
+            this.sendTaxiData(2);
         } catch (MissingEnvironmentVariableException ex) {
             System.out.println("Couldn't send the data via Kafka");
             throw ex;
         }
     }
 
-    private void sendTaxiData() throws MissingEnvironmentVariableException {
+    /**
+     * Send the taxi data with an interval directly related to the real intervals of the data
+     * @param speed Speed of sending data compared to the real speed. Value of 10 means it is 10x faster than real time
+     * @throws MissingEnvironmentVariableException
+     */
+    private void sendTaxiData(double speed) throws MissingEnvironmentVariableException {
         var producer = ProducerFactory.createProducer();
 
         System.out.println("Starting to publish taxi data on topic " + topic);
 
-        for (var position: taxiPositions) {
-            var record = new ProducerRecord<>(topic, position.toString(), position);
-            producer.send(record);
-            System.out.printf("topic = %s, key = %s, value = %s%n", record.topic(), record.key(), record.value());
+        int i = 0;
+        var lastSentPositionTimestamp = new Date(1970, 1, 1);
+        long timeElapsedSinceLastSent = 0;
+        long previousTime = 0;
+
+        while(i < taxiPositions.size()) {
+            var nextPositionTimestamp = taxiPositions.get(i).getTimestamp();
+            var timeBetweenPositions = nextPositionTimestamp.getTime() - lastSentPositionTimestamp.getTime();
+
+            var currentTime = System.currentTimeMillis();
+            timeElapsedSinceLastSent += currentTime - previousTime;
+            previousTime = currentTime;
+
+            if (timeElapsedSinceLastSent >= timeBetweenPositions / speed) {
+                while (i < taxiPositions.size()) {
+                    var nextPosition = taxiPositions.get(i);
+                    if (nextPosition.getTimestamp().after(nextPositionTimestamp)) {
+                        break;
+                    }
+                    var record = new ProducerRecord<>(topic, String.valueOf(i), nextPosition);
+                    producer.send(record);
+                    i++;
+                }
+                System.out.println("Sent positions with timestamp = " + nextPositionTimestamp);
+                timeElapsedSinceLastSent = 0;
+                lastSentPositionTimestamp = nextPositionTimestamp;
+            } else {
+                try {
+                    Thread.sleep(Math.round((timeBetweenPositions - timeElapsedSinceLastSent) / speed));
+                } catch (InterruptedException e) {
+                    System.out.println("Error trying to sleep");
+                }
+            }
+
         }
 
         System.out.println("Finished publishing all the data. Disconnecting.");

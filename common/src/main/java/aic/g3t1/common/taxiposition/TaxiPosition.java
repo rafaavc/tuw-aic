@@ -44,7 +44,10 @@ public class TaxiPosition implements Serializable, Comparable<TaxiPosition> {
 
     @Override
     public int compareTo(TaxiPosition taxiPosition) {
-        return this.timestamp.compareTo(taxiPosition.timestamp);
+        if (this.timestamp.compareTo(taxiPosition.timestamp) != 0) {
+            return this.timestamp.compareTo(taxiPosition.timestamp);
+        }
+        return this.taxiNumber - taxiPosition.taxiNumber;
     }
 
     @Override
