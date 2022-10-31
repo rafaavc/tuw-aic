@@ -1,6 +1,6 @@
 package aic.g3t1.common.taxiposition;
 
-import java.io.*;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
