@@ -37,3 +37,12 @@ services:
   zookeeper:
     image: 'zookeeper:3.8.0'
     container_name: zookeeper
+
+  storm-supervisor:
+    image: 'storm:2.4.0'
+    command: storm supervisor
+    depends_on:
+      - zookeeper
+      - consumer
+    volumes:
+      - './storm-supervisor/storm.yaml:/conf/storm.yaml'
