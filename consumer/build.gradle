@@ -24,7 +24,9 @@ configurations {
 dependencies {
     // https://mvnrepository.com/artifact/org.apache.kafka/kafka
     implementation group: 'org.apache.kafka', name: 'kafka_2.13', version: '3.3.1'
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.3'
+    provided group: 'org.apache.storm', name: 'storm-client', version: '2.4.0'
+    implementation group: 'org.apache.storm', name: 'storm-kafka-client', version: '2.4.0'
+    provided group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.3'
 
     implementation project(':common')
 
