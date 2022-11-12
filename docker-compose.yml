@@ -18,6 +18,8 @@ services:
     build:
       context: .
       dockerfile: producer/Dockerfile
+    depends_on:
+      - kafka
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
 
@@ -25,6 +27,8 @@ services:
     build:
       context: .
       dockerfile: consumer/Dockerfile
+    depends_on:
+      - kafka
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
