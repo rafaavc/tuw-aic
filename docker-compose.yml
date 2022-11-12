@@ -33,6 +33,8 @@ services:
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
+    ports:
+      - '8080:8080' # Storm UI
 
   zookeeper:
     image: 'zookeeper:3.8.0'
