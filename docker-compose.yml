@@ -13,6 +13,8 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@127.0.0.1:9093
       ALLOW_PLAINTEXT_LISTENER: yes
+    networks:
+      - storm
 
   producer:
     build:
@@ -20,6 +22,8 @@ services:
       dockerfile: producer/Dockerfile
     depends_on:
       - kafka
+    networks:
+      - storm
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
 
@@ -30,6 +34,8 @@ services:
     depends_on:
       - zookeeper
       - kafka
+    networks:
+      - storm
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
@@ -39,6 +45,8 @@ services:
   zookeeper:
     image: 'zookeeper:3.8.0'
     container_name: zookeeper
+    networks:
+      - storm
 
   storm-supervisor:
     image: 'storm:2.4.0'
@@ -46,5 +54,10 @@ services:
     depends_on:
       - zookeeper
       - consumer
+    networks:
+      - storm
     volumes:
       - './storm-supervisor/storm.yaml:/conf/storm.yaml'
+
+networks:
+  storm:
