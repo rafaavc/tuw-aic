@@ -43,8 +43,10 @@ services:
       - '8080:8080' # Storm UI
 
   zookeeper:
-    image: 'zookeeper:3.8.0'
+    image: 'bitnami/zookeeper:latest'
     container_name: zookeeper
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: yes
     networks:
       - storm
 
