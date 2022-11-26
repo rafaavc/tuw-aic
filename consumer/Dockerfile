@@ -72,6 +72,11 @@ ADD consumer/storm.yaml $STORM_CONF_DIR
 
 ### END Storm Setup
 
+# Install wait-for
+RUN apt-get -q update && apt-get -qy install netcat
+ADD https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for /wait-for
+RUN chmod +x /wait-for
+
 WORKDIR /opt
 
 # so that it doesn't download it when gradlew is called
