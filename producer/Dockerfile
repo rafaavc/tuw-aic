@@ -1,4 +1,4 @@
-FROM openjdk:18-bullseye
+FROM openjdk:11-bullseye
 
 WORKDIR /opt
 

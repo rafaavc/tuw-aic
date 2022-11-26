@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 public class FileReader implements Callable<List<TaxiPosition>> {
     private final Path taxiFile;
@@ -24,6 +25,6 @@ public class FileReader implements Callable<List<TaxiPosition>> {
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-        }).toList();
+        }).collect(Collectors.toList());
     }
 }

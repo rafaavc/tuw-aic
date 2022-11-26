@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class Producer {
     private final String topic = "taxi";
@@ -62,9 +63,9 @@ public class Producer {
 
         System.out.println("Reading the taxi data from the files in " + folder);
 
-        List<Path> taxiFiles = Files.walk(dataFolder).filter(Files::isReadable).toList();
+        List<Path> taxiFiles = Files.walk(dataFolder).filter(Files::isReadable).collect(Collectors.toList());
 
-        List<FileReader> readTasks = new ArrayList<FileReader>();
+        List<FileReader> readTasks = new ArrayList<>();
         for (Path taxiFile : taxiFiles) {
             if (!Files.isRegularFile(taxiFile) || !Files.isReadable(taxiFile)) {
                 continue;
