@@ -22,12 +22,13 @@ public class AicKafkaSpout extends KafkaSpout<String, TaxiPosition> {
 
         var properties = new Properties();
         properties.setProperty("group.id", EnvironmentVariables.getVariable("KAFKA_GROUP_ID"));
+        properties.setProperty("bootstrap.servers", bootstrapServer);
         properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.setProperty("value.deserializer", "aic.g3t1.common.taxiposition.TaxiPositionDeserializer");
 
         var builder = new KafkaSpoutConfig.Builder<String, TaxiPosition>(bootstrapServer, KAFKA_TOPIC);
-        builder.setProcessingGuarantee(KafkaSpoutConfig.ProcessingGuarantee.AT_LEAST_ONCE);
         builder.setProp(properties);
+        builder.setProcessingGuarantee(KafkaSpoutConfig.ProcessingGuarantee.AT_MOST_ONCE);
         return new KafkaSpoutConfig<>(builder);
     }
 
