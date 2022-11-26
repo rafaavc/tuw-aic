@@ -49,15 +49,14 @@ services:
       - storm
 
   storm-supervisor:
-    image: 'storm:2.4.0'
-    command: storm supervisor
+    build: storm-supervisor
     depends_on:
       - zookeeper
       - consumer
     networks:
       - storm
-    volumes:
-      - './storm-supervisor/storm.yaml:/conf/storm.yaml'
+    environment:
+      WAIT_NIMBUS: consumer:6627
 
 networks:
   storm:
