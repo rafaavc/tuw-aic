@@ -3,6 +3,10 @@ storm.zookeeper.servers:
 
 storm.zookeeper.port: 2181
 
+storm.local.hostname: "localhost"
+storm.logs.dir: "/logs"
+storm.workers.artifacts.dir: "/logs/workers-artifacts"
+
 nimbus.seeds : ["consumer"]
 
 supervisor.slots.ports:
