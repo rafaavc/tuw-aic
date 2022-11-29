@@ -26,7 +26,6 @@ services:
       - storm
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
-      KAFKA_TOPIC: ${KAFKA_TOPIC}
       TAXI_DATA_FOLDER: ${TAXI_DATA_FOLDER}
       TAXI_DATA_SPEED: ${TAXI_DATA_SPEED}
 
@@ -43,7 +42,6 @@ services:
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
-      KAFKA_TOPIC: ${KAFKA_TOPIC}
 
     ports:
       - '8080:8080' # Storm UI

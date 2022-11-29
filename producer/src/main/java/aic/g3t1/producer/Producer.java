@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Producer {
-    private final String topic = EnvironmentVariables.getVariable("KAFKA_TOPIC");
+    private final String topic = "taxi";
     private final String folder = "../" + EnvironmentVariables.getVariable("TAXI_DATA_FOLDER");
     private final int speed = Integer.parseInt(EnvironmentVariables.getVariable("TAXI_DATA_SPEED"));
     private final List<TaxiPosition> taxiPositions = new ArrayList<>();
