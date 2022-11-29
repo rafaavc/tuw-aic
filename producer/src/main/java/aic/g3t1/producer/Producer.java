@@ -1,5 +1,6 @@
 package aic.g3t1.producer;
 
+import aic.g3t1.common.environment.EnvironmentVariables;
 import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
 import aic.g3t1.common.kafka.ProducerFactory;
 import aic.g3t1.common.taxiposition.TaxiPosition;
@@ -19,11 +20,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Producer {
-    private final String topic = "taxi";
-    private final String folder = "../taxi_data/";
-    private final int speed = 1;
+    private final String topic = EnvironmentVariables.getVariable("KAFKA_TOPIC");
+    private final String folder = "../" + EnvironmentVariables.getVariable("TAXI_DATA_FOLDER");
+    private final int speed = Integer.parseInt(EnvironmentVariables.getVariable("TAXI_DATA_SPEED"));
     private final List<TaxiPosition> taxiPositions = new ArrayList<>();
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+
+    public Producer() throws MissingEnvironmentVariableException {
+    }
 
     public void start() throws Exception {
         try {
