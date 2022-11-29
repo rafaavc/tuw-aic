@@ -6,9 +6,13 @@ import org.apache.storm.Config;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
-        AicTopology topology = new AicTopology();
-        topology.submit(getConfig());
+    public static void main(String[] args) {
+        try {
+            AicTopology topology = new AicTopology();
+            topology.submit(getConfig());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static Config getConfig() {
