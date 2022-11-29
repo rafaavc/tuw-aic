@@ -1,5 +1,5 @@
 
-![DSG](./docs/dsg_logo.png)
+![DSG](./example/docs/dsg_logo.png)
 
 # Advanced Internet Computing WS 2022 - Group 3 Topic 1
 

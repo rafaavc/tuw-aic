@@ -1,0 +1,18 @@
+storm.zookeeper.servers:
+  - "zookeeper"
+
+storm.zookeeper.port: 2181
+
+storm.local.hostname: "localhost"
+storm.logs.dir: "/logs"
+storm.workers.artifacts.dir: "/logs/workers-artifacts"
+
+nimbus.seeds : ["consumer"]
+
+supervisor.slots.ports:
+  - 6700
+  - 6701
+  - 6702
+  - 6703
+
+worker.childopts: "-Xmx%HEAP-MEM%m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=artifacts/heapdump"

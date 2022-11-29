@@ -17,7 +17,7 @@ public class TaxiPositionSerializer implements Serializer {
         try {
             ByteArrayOutputStream arrayStream = new ByteArrayOutputStream();
             ObjectOutputStream objectStream = new ObjectOutputStream(arrayStream);
-            objectStream.writeObject((TaxiPosition) data);
+            objectStream.writeObject(data);
             byte[] byteArray = arrayStream.toByteArray();
             arrayStream.close();
             objectStream.close();
