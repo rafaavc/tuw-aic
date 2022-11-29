@@ -7,6 +7,7 @@ import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Tuple;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DebugSink extends BaseRichBolt {
 
@@ -20,6 +21,8 @@ public class DebugSink extends BaseRichBolt {
     @Override
     public void execute(Tuple input) {
         System.out.println(input.toString());
+        System.out.println(input.getFields());
+        System.out.println(input.getValues().stream().map(v -> v.toString() + " (" + v.getClass() + ")").collect(Collectors.toList()));
         collector.ack(input);
     }
 
