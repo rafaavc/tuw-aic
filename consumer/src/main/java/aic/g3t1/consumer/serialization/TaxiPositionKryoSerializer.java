@@ -1,4 +1,4 @@
-package aic.g3t1.consumer;
+package aic.g3t1.consumer.serialization;
 
 import aic.g3t1.common.taxiposition.TaxiPosition;
 import com.esotericsoftware.kryo.Kryo;
