@@ -44,16 +44,12 @@ public class CalculateDistanceBolt extends AbstractRedisBolt {
                 .build();
         int taxiNumber = taxiPosition.getTaxiNumber();
 
-        if (!lastPositions.containsKey(taxiNumber)) {
-            lastPositions.put(taxiNumber, taxiPosition);
-            collector.ack(tuple);
-            return;
+        TaxiPosition lastPosition = lastPositions.put(taxiNumber, taxiPosition);
+        if (lastPosition != null) {
+            double distance = GeoLocation.distance(lastPosition.getLocation(), taxiPosition.getLocation());
+            collector.emit(tuple, List.of(taxiNumber, new IncrementDistanceOperation(taxiNumber, distance)));
         }
 
-        TaxiPosition lastPosition = lastPositions.get(taxiNumber);
-        double distance = GeoLocation.distance(lastPosition.getLocation(), taxiPosition.getLocation());
-
-        collector.emit(tuple, List.of(taxiNumber, new IncrementDistanceOperation(taxiNumber, distance)));
         collector.ack(tuple);
     }
 
