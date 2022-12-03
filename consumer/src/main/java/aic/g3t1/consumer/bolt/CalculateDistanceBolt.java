@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static aic.g3t1.consumer.redis.operation.RedisOperation.F_REDIS_OPERATION;
+import static aic.g3t1.consumer.redis.operation.RedisOperation.*;
 import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
 
 public class CalculateDistanceBolt extends AbstractRedisBolt {
@@ -53,13 +53,13 @@ public class CalculateDistanceBolt extends AbstractRedisBolt {
         TaxiPosition lastPosition = lastPositions.get(taxiNumber);
         double distance = GeoLocation.distance(lastPosition.getLocation(), taxiPosition.getLocation());
 
-        collector.emit(tuple, List.of(new IncrementDistanceOperation(taxiNumber, distance)));
+        collector.emit(tuple, List.of(taxiNumber, new IncrementDistanceOperation(taxiNumber, distance)));
         collector.ack(tuple);
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields(F_REDIS_OPERATION));
+        declarer.declare(new Fields(F_GROUP, F_REDIS_OPERATION));
     }
 
 }
