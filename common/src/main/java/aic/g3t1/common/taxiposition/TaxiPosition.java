@@ -26,6 +26,10 @@ public class TaxiPosition implements Serializable, Comparable<TaxiPosition> {
         this.latitude = Double.parseDouble(splitLine[3]);
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public int getTaxiNumber() {
         return taxiNumber;
     }
@@ -62,10 +66,6 @@ public class TaxiPosition implements Serializable, Comparable<TaxiPosition> {
 
     public GeoLocation getLocation() {
         return new GeoLocation(latitude, longitude);
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public static class Builder {

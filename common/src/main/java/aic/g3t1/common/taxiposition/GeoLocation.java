@@ -12,14 +12,6 @@ public class GeoLocation {
         this.longitude = longitudeDegrees * Math.PI / 180;
     }
 
-    public double latitude() {
-        return latitude;
-    }
-
-    public double longitude() {
-        return longitude;
-    }
-
     public static double hav(double centralAngle) {
         double sine = Math.sin(centralAngle / 2);
         return sine * sine;
@@ -32,6 +24,14 @@ public class GeoLocation {
         double h = hav(deltaLatitude) + (1 - hav(-deltaLatitude) - hav(sumLatitude)) * hav(deltaLongitude);
         double radical = Math.sqrt(Math.min(h, 1));
         return 2 * RADIUS_EARTH * Math.asin(radical);
+    }
+
+    public double latitude() {
+        return latitude;
+    }
+
+    public double longitude() {
+        return longitude;
     }
 
 }
