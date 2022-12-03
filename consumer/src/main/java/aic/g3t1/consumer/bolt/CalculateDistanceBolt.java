@@ -3,7 +3,6 @@ package aic.g3t1.consumer.bolt;
 import aic.g3t1.common.taxiposition.GeoLocation;
 import aic.g3t1.common.taxiposition.TaxiPosition;
 import aic.g3t1.consumer.redis.operation.IncrementDistanceOperation;
-import aic.g3t1.consumer.spout.TaxiPositionFields;
 import org.apache.storm.redis.bolt.AbstractRedisBolt;
 import org.apache.storm.redis.common.config.JedisPoolConfig;
 import org.apache.storm.task.OutputCollector;
@@ -18,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static aic.g3t1.consumer.redis.operation.RedisOperation.F_REDIS_OPERATION;
+import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
 
 public class CalculateDistanceBolt extends AbstractRedisBolt {
 
@@ -37,10 +37,10 @@ public class CalculateDistanceBolt extends AbstractRedisBolt {
     @Override
     protected void process(Tuple tuple) {
         TaxiPosition taxiPosition = TaxiPosition.builder()
-                .taxiNumber(tuple.getIntegerByField(TaxiPositionFields.F_TAXI_NUMBER))
-                .timestamp((Date) tuple.getValueByField(TaxiPositionFields.F_TIMESTAMP))
-                .longitude(tuple.getDoubleByField(TaxiPositionFields.F_LONGITUDE))
-                .latitude(tuple.getDoubleByField(TaxiPositionFields.F_LATITUDE))
+                .taxiNumber(tuple.getIntegerByField(F_TAXI_NUMBER))
+                .timestamp((Date) tuple.getValueByField(F_TIMESTAMP))
+                .longitude(tuple.getDoubleByField(F_LONGITUDE))
+                .latitude(tuple.getDoubleByField(F_LATITUDE))
                 .build();
         int taxiNumber = taxiPosition.getTaxiNumber();
 
