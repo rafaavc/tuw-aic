@@ -1,6 +1,7 @@
 package aic.g3t1.consumer;
 
 import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.consumer.redis.operation.IncrementDistanceOperation;
 import aic.g3t1.consumer.serialization.TaxiPositionKryoSerializer;
 import aic.g3t1.consumer.topology.AicTopology;
 import org.apache.storm.Config;
@@ -22,6 +23,7 @@ public class Main {
         Config config = new Config();
         config.registerSerialization(TaxiPosition.class, TaxiPositionKryoSerializer.class);
         config.registerSerialization(Date.class);
+        config.registerSerialization(IncrementDistanceOperation.class);
         config.setDebug(true);
         config.setNumWorkers(3);
         return config;
