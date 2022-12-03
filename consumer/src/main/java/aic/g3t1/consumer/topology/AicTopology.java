@@ -46,7 +46,7 @@ public class AicTopology {
         BUILDER.setBolt(KAFKA_TUPLE_BOLT_ID, new KafkaTupleBolt(), 1).globalGrouping(KAFKA_SPOUT_ID);
         BUILDER.setBolt(DEBUG_SINK_ID, new DebugSink()).fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields(F_TAXI_NUMBER));
 
-        BUILDER.setBolt(CALCULATE_DISTANCE_BOLT_ID, new CalculateDistanceBolt(jedisPoolConfig))
+        BUILDER.setBolt(CALCULATE_DISTANCE_BOLT_ID, new CalculateDistanceBolt())
                 .fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields(F_TAXI_NUMBER));
         BUILDER.setBolt(STORE_INFORMATION_SINK, new StoreInformationSink(jedisPoolConfig))
                 .fieldsGrouping(CALCULATE_DISTANCE_BOLT_ID, new Fields(F_GROUP));

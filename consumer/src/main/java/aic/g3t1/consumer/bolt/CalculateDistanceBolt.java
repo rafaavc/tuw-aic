@@ -3,11 +3,10 @@ package aic.g3t1.consumer.bolt;
 import aic.g3t1.common.taxiposition.GeoLocation;
 import aic.g3t1.common.taxiposition.TaxiPosition;
 import aic.g3t1.consumer.redis.operation.IncrementDistanceOperation;
-import org.apache.storm.redis.bolt.AbstractRedisBolt;
-import org.apache.storm.redis.common.config.JedisPoolConfig;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
+import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Tuple;
 
@@ -19,23 +18,21 @@ import java.util.Map;
 import static aic.g3t1.consumer.redis.operation.RedisOperation.*;
 import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
 
-public class CalculateDistanceBolt extends AbstractRedisBolt {
+public class CalculateDistanceBolt extends BaseRichBolt {
 
     private static final long serialVersionUID = 8173659194652408935L;
 
-    private final Map<Integer, TaxiPosition> lastPositions = new HashMap<>();
+    private OutputCollector collector;
 
-    public CalculateDistanceBolt(JedisPoolConfig config) {
-        super(config);
-    }
+    private final Map<Integer, TaxiPosition> lastPositions = new HashMap<>();
 
     @Override
     public void prepare(Map<String, Object> map, TopologyContext topologyContext, OutputCollector collector) {
-        super.prepare(map, topologyContext, collector);
+        this.collector = collector;
     }
 
     @Override
-    protected void process(Tuple tuple) {
+    public void execute(Tuple tuple) {
         TaxiPosition taxiPosition = TaxiPosition.builder()
                 .taxiNumber(tuple.getIntegerByField(F_TAXI_NUMBER))
                 .timestamp((Date) tuple.getValueByField(F_TIMESTAMP))
