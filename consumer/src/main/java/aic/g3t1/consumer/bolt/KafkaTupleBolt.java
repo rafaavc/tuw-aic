@@ -15,6 +15,7 @@ import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
 
 public class KafkaTupleBolt extends BaseRichBolt {
 
+    private static final long serialVersionUID = -4412134666082435893L;
     private OutputCollector collector;
 
     @Override

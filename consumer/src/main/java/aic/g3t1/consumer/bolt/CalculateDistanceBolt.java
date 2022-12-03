@@ -19,6 +19,7 @@ import java.util.Map;
 public class CalculateDistanceBolt extends AbstractRedisBolt {
 
     public static final String R_DISTANCE_HASH = "distance";
+    private static final long serialVersionUID = 8173659194652408935L;
 
     private final Map<Integer, TaxiPosition> lastPositions = new HashMap<>();
 
