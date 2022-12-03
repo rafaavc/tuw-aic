@@ -11,6 +11,8 @@ import org.apache.storm.tuple.Tuple;
 import java.util.List;
 import java.util.Map;
 
+import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
+
 public class KafkaTupleBolt extends BaseRichBolt {
 
     private OutputCollector collector;
@@ -29,7 +31,7 @@ public class KafkaTupleBolt extends BaseRichBolt {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields("taxiNumber", "timestamp", "longitude", "latitude"));
+        declarer.declare(new Fields(F_TAXI_NUMBER, F_TIMESTAMP, F_LONGITUDE, F_LATITUDE));
     }
 
 }

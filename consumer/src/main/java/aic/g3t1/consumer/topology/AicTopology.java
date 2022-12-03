@@ -12,6 +12,8 @@ import org.apache.storm.generated.InvalidTopologyException;
 import org.apache.storm.topology.TopologyBuilder;
 import org.apache.storm.tuple.Fields;
 
+import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
+
 public class AicTopology {
 
     private static final String TOPOLOGY_NAME = "aic-topology";
@@ -28,7 +30,7 @@ public class AicTopology {
     private void initialize() throws MissingEnvironmentVariableException {
         BUILDER.setSpout(KAFKA_SPOUT_ID, new AicKafkaSpout(), 1);
         BUILDER.setBolt(KAFKA_TUPLE_BOLT_ID, new KafkaTupleBolt(), 1).globalGrouping(KAFKA_SPOUT_ID);
-        BUILDER.setBolt(DEBUG_SINK_ID, new DebugSink()).fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields("taxiNumber"));
+        BUILDER.setBolt(DEBUG_SINK_ID, new DebugSink()).fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields(F_TAXI_NUMBER));
     }
 
     public void submit(Config config) throws AuthorizationException, InvalidTopologyException, AlreadyAliveException {
