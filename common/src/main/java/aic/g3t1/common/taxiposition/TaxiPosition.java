@@ -59,4 +59,9 @@ public class TaxiPosition implements Serializable, Comparable<TaxiPosition> {
                 ", latitude=" + latitude +
                 '}';
     }
+
+    public GeoLocation getLocation() {
+        return new GeoLocation(latitude, longitude);
+    }
+
 }
