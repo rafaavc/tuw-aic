@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -23,6 +24,7 @@ public class Producer {
     private final String topic = "taxi";
     private final String folder = "../" + EnvironmentVariables.getVariable("TAXI_DATA_FOLDER");
     private final int speed = Integer.parseInt(EnvironmentVariables.getVariable("TAXI_DATA_SPEED"));
+    private int numberTaxis = Integer.parseInt(EnvironmentVariables.getVariable("NUMBER_TAXIS"));
     private final List<TaxiPosition> taxiPositions = new ArrayList<>();
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
@@ -60,6 +62,7 @@ public class Producer {
     }
 
     private void readTaxiData(String folder) throws IOException, InterruptedException {
+        System.out.println(System.getProperty("user.dir"));
         Path dataFolder = Paths.get(folder);
         if (!Files.isDirectory(dataFolder)) {
             throw new FileNotFoundException("Folder with taxi data was not found.");
@@ -67,13 +70,20 @@ public class Producer {
 
         System.out.println("Reading the taxi data from the files in " + folder);
 
-        List<Path> taxiFiles = Files.walk(dataFolder).filter(Files::isReadable).collect(Collectors.toList());
+        // Get all files in folder and sort them based on the number in their name.
+        // If they were sorted by name instead of the number, "10.txt" < "2.txt".
+        List<Path> taxiFiles = new ArrayList<>(Files.walk(dataFolder).filter(Files::isReadable).filter(Files::isRegularFile).collect(Collectors.toList()));
+        taxiFiles.sort(Comparator.comparingInt((Path file) -> Integer.parseInt(file.getFileName().toString().split("\\.")[0])));
+        if (numberTaxis == -1) {
+            numberTaxis = taxiFiles.size();
+        } else if (taxiFiles.size() < numberTaxis) {
+            System.out.println("Less taxi files that the number of taxis specified. Reading all files.");
+            numberTaxis = taxiFiles.size();
+        }
 
         List<FileReader> readTasks = new ArrayList<>();
-        for (Path taxiFile : taxiFiles) {
-            if (!Files.isRegularFile(taxiFile) || !Files.isReadable(taxiFile)) {
-                continue;
-            }
+        for (int i = 0; i < numberTaxis; i++) {
+            Path taxiFile = taxiFiles.get(i);
             readTasks.add(new FileReader(taxiFile));
         }
 

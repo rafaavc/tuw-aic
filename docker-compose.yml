@@ -28,6 +28,7 @@ services:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       TAXI_DATA_FOLDER: ${TAXI_DATA_FOLDER}
       TAXI_DATA_SPEED: ${TAXI_DATA_SPEED}
+      NUMBER_TAXIS: ${NUMBER_TAXIS}
 
 
   consumer:
