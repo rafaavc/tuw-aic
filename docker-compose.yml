@@ -65,5 +65,23 @@ services:
     environment:
       WAIT_NIMBUS: consumer:6627
 
+  redis:
+    container_name: redis
+    build:
+      context: ./redis
+    networks:
+      - storm
+
+#  redis-example:
+#    build:
+#      context: .
+#      dockerfile: ./redis-example/Dockerfile
+#    depends_on:
+#      - redis
+#    networks:
+#      - storm
+#    environment:
+#      REDIS_HOST: redis:6379
+
 networks:
   storm:
