@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class AicKafkaSpout extends KafkaSpout<String, TaxiPosition> {
 
-    public static final String KAFKA_TOPIC = "taxi";
+    public static String KAFKA_TOPIC = "taxi";
 
     public AicKafkaSpout() throws MissingEnvironmentVariableException {
         super(getKafkaSpoutConfig());

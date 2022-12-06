@@ -11,7 +11,6 @@ ADD https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for /wait-for
 RUN chmod +x /wait-for
 
 COPY . /app
-COPY ../taxi_data /app
 
 WORKDIR /app/producer
 
