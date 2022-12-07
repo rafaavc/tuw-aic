@@ -15,7 +15,7 @@ pid=$!
 /wait-for "localhost:6627" -t 30 || exit 102
 echo "Nimbus is online!"
 
-sleep 1s
+sleep 5s
 echo "Starting Storm UI..."
 storm ui &
 /wait-for "localhost:8080" -t 30 || exit 103
