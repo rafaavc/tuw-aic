@@ -26,4 +26,12 @@ public class IncrementDistanceOperation implements RedisOperation {
         commands.hincrByFloat(R_DISTANCE_HASH, String.valueOf(taxiNumber), distance);
     }
 
+    @Override
+    public String toString() {
+        return "{ " +
+                "\"taxiNumber\": " + taxiNumber +
+                ", \"distance\": " + distance +
+                " }";
+    }
+
 }
