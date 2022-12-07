@@ -18,12 +18,18 @@ services:
     build:
       context: .
       dockerfile: producer/Dockerfile
+      args:
+        - TAXI_DATA_FOLDER=${TAXI_DATA_FOLDER}
     depends_on:
       - kafka
     networks:
       - storm
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
+      TAXI_DATA_FOLDER: ${TAXI_DATA_FOLDER}
+      TAXI_DATA_SPEED: ${TAXI_DATA_SPEED}
+      NUMBER_TAXIS: ${NUMBER_TAXIS}
+
 
   consumer:
     build:
@@ -37,6 +43,7 @@ services:
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
+
     ports:
       - '8080:8080' # Storm UI
 
@@ -57,6 +64,24 @@ services:
       - storm
     environment:
       WAIT_NIMBUS: consumer:6627
+
+  redis:
+    container_name: redis
+    build:
+      context: ./redis
+    networks:
+      - storm
+
+#  redis-example:
+#    build:
+#      context: .
+#      dockerfile: ./redis-example/Dockerfile
+#    depends_on:
+#      - redis
+#    networks:
+#      - storm
+#    environment:
+#      REDIS_HOST: redis:6379
 
 networks:
   storm:
