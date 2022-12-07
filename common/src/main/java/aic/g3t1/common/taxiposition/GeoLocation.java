@@ -2,6 +2,9 @@ package aic.g3t1.common.taxiposition;
 
 public class GeoLocation {
 
+    /**
+     * The earth's radius in meters.
+     */
     private static final double RADIUS_EARTH = 6_371_000;
 
     private final double latitude;
@@ -17,6 +20,12 @@ public class GeoLocation {
         return sine * sine;
     }
 
+    /**
+     * Returns the distance between to GeoLocations in meters.
+     * @param location1 the first location
+     * @param location2 the second location
+     * @return The spherical distance in meters.
+     */
     public static double distance(GeoLocation location1, GeoLocation location2) {
         double deltaLatitude = location2.latitude - location1.latitude;
         double sumLatitude = location1.latitude + location2.latitude;
