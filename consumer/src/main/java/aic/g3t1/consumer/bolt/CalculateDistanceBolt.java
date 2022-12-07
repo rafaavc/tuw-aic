@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static aic.g3t1.consumer.redis.operation.RedisOperation.*;
+import static aic.g3t1.consumer.redis.operation.RedisOperation.F_GROUP;
+import static aic.g3t1.consumer.redis.operation.RedisOperation.F_REDIS_OPERATION;
 import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
 
 public class CalculateDistanceBolt extends BaseRichBolt {
@@ -27,7 +28,7 @@ public class CalculateDistanceBolt extends BaseRichBolt {
     private final Map<Integer, TaxiPosition> lastPositions = new HashMap<>();
 
     @Override
-    public void prepare(Map<String, Object> map, TopologyContext topologyContext, OutputCollector collector) {
+    public void prepare(Map<String, Object> topoConf, TopologyContext context, OutputCollector collector) {
         this.collector = collector;
     }
 
