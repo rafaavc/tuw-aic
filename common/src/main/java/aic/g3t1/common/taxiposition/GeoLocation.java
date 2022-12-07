@@ -50,4 +50,9 @@ public class GeoLocation {
         return Math.min(Math.max(value, lowerBound), upperBound);
     }
 
+    @Override
+    public String toString() {
+        return "(" + (latitude * 180 / Math.PI) + " | " + (longitude * 180 / Math.PI) + ")";
+    }
+
 }
