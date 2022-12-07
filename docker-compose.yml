@@ -38,6 +38,7 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - redis
     networks:
       - storm
     environment:
