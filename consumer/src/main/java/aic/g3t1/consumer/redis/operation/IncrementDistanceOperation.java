@@ -10,6 +10,12 @@ public class IncrementDistanceOperation implements RedisOperation {
     private final Integer taxiNumber;
     private final Double distance;
 
+    // Kryo no-arg constructor
+    public IncrementDistanceOperation() {
+        taxiNumber = -1;
+        distance = 0d;
+    }
+
     public IncrementDistanceOperation(int taxiNumber, double distance) {
         this.taxiNumber = taxiNumber;
         this.distance = distance;
