@@ -22,7 +22,7 @@ public class GeoLocation {
         double sumLatitude = location1.latitude + location2.latitude;
         double deltaLongitude = location2.longitude - location1.longitude;
         double h = hav(deltaLatitude) + (1 - hav(-deltaLatitude) - hav(sumLatitude)) * hav(deltaLongitude);
-        double radical = Math.sqrt(Math.min(h, 1));
+        double radical = Math.sqrt(clamp(h, 0, 1));
         return 2 * RADIUS_EARTH * Math.asin(radical);
     }
 
@@ -32,6 +32,13 @@ public class GeoLocation {
 
     public double longitude() {
         return longitude;
+    }
+
+    private static double clamp(double value, double lowerBound, double upperBound) {
+        if (lowerBound > upperBound) {
+            throw new IllegalArgumentException("Lower bound must be less than or equal to upper bound");
+        }
+        return Math.min(Math.max(value, lowerBound), upperBound);
     }
 
 }
