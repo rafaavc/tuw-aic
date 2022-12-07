@@ -22,7 +22,7 @@ public class CalculateDistanceBolt extends BaseRichBolt {
 
     private static final long serialVersionUID = 8173659194652408935L;
 
-    private OutputCollector collector;
+    private transient OutputCollector collector;
 
     private final Map<Integer, TaxiPosition> lastPositions = new HashMap<>();
 
