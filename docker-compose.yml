@@ -38,12 +38,13 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - redis
     networks:
       - storm
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
-
+      REDIS_HOST: redis:6379
     ports:
       - '8080:8080' # Storm UI
 

@@ -26,6 +26,10 @@ public class TaxiPosition implements Serializable, Comparable<TaxiPosition> {
         this.latitude = Double.parseDouble(splitLine[3]);
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public int getTaxiNumber() {
         return taxiNumber;
     }
@@ -59,4 +63,42 @@ public class TaxiPosition implements Serializable, Comparable<TaxiPosition> {
                 ", latitude=" + latitude +
                 '}';
     }
+
+    public GeoLocation getLocation() {
+        return new GeoLocation(latitude, longitude);
+    }
+
+    public static class Builder {
+
+        private int taxiNumber;
+        private Date timestamp;
+        private double longitude;
+        private double latitude;
+
+        public Builder taxiNumber(int taxiNumber) {
+            this.taxiNumber = taxiNumber;
+            return this;
+        }
+
+        public Builder timestamp(Date timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
+        public Builder longitude(double longitude) {
+            this.longitude = longitude;
+            return this;
+        }
+
+        public Builder latitude(double latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        public TaxiPosition build() {
+            return new TaxiPosition(taxiNumber, timestamp, longitude, latitude);
+        }
+
+    }
+
 }

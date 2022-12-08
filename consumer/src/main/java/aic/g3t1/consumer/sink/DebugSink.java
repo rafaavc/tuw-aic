@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class DebugSink extends BaseRichBolt {
 
+    private static final long serialVersionUID = 1016298477425480095L;
     private OutputCollector collector;
 
     @Override
