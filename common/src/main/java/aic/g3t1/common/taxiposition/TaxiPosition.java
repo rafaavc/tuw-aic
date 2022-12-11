@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TaxiPosition implements Serializable, Comparable<TaxiPosition> {
+
     private final int taxiNumber;
     private final Date timestamp;
     private final double longitude;

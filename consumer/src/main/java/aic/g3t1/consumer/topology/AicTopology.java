@@ -1,7 +1,9 @@
 package aic.g3t1.consumer.topology;
 
 import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
+import aic.g3t1.consumer.bolt.CalculateAverageSpeedBolt;
 import aic.g3t1.consumer.bolt.CalculateDistanceBolt;
+import aic.g3t1.consumer.bolt.CalculateSpeedBolt;
 import aic.g3t1.consumer.bolt.KafkaTupleBolt;
 import aic.g3t1.consumer.sink.DebugSink;
 import aic.g3t1.consumer.sink.StoreInformationSink;
@@ -27,6 +29,8 @@ public class AicTopology {
     private static final String KAFKA_SPOUT_ID = "kafka_spout";
     private static final String KAFKA_TUPLE_BOLT_ID = "kafka_tuple_bolt";
     private static final String CALCULATE_DISTANCE_BOLT_ID = "calculate_distance_bolt";
+    private static final String CALCULATE_SPEED_BOLT_ID = "calculate_speed_bolt";
+    private static final String CALCULATE_AVERAGE_SPEED_BOLT_ID = "calculate_average_speed_bolt";
     private static final String STORE_INFORMATION_SINK_ID = "store_information_sink";
     private static final String DEBUG_SINK_ID = "debug_sink";
 
@@ -48,8 +52,16 @@ public class AicTopology {
 
         BUILDER.setBolt(CALCULATE_DISTANCE_BOLT_ID, new CalculateDistanceBolt())
                 .fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields(F_TAXI_NUMBER));
+
+        BUILDER.setBolt(CALCULATE_SPEED_BOLT_ID, new CalculateSpeedBolt())
+                .fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields(F_TAXI_NUMBER));
+
+        BUILDER.setBolt(CALCULATE_AVERAGE_SPEED_BOLT_ID, new CalculateAverageSpeedBolt())
+                .fieldsGrouping(CALCULATE_SPEED_BOLT_ID, new Fields(F_TAXI_NUMBER));
+
         BUILDER.setBolt(STORE_INFORMATION_SINK_ID, new StoreInformationSink(jedisPoolConfig))
-                .fieldsGrouping(CALCULATE_DISTANCE_BOLT_ID, new Fields(F_GROUP));
+                .fieldsGrouping(CALCULATE_DISTANCE_BOLT_ID, new Fields(F_GROUP))
+                .fieldsGrouping(CALCULATE_AVERAGE_SPEED_BOLT_ID, new Fields(F_GROUP));
     }
 
     public void submit(Config config) throws AuthorizationException, InvalidTopologyException, AlreadyAliveException {
