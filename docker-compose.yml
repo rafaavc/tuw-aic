@@ -50,6 +50,7 @@ services:
 
   zookeeper:
     image: 'bitnami/zookeeper:latest'
+    platform: linux/amd64
     container_name: zookeeper
     environment:
       ALLOW_ANONYMOUS_LOGIN: yes
@@ -58,6 +59,7 @@ services:
 
   storm-supervisor:
     build: storm-supervisor
+    platform: linux/amd64
     depends_on:
       - zookeeper
       - consumer
@@ -72,6 +74,8 @@ services:
       context: ./redis
     networks:
       - storm
+#    ports:
+#      - 6379:6379
 
 #  redis-example:
 #    build:
