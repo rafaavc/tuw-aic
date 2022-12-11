@@ -3,6 +3,7 @@ package aic.g3t1.consumer;
 import aic.g3t1.common.taxiposition.TaxiPosition;
 import aic.g3t1.consumer.redis.operation.IncrementDistanceOperation;
 import aic.g3t1.consumer.redis.operation.SetAverageSpeedOperation;
+import aic.g3t1.consumer.redis.operation.UpdateLocationOperation;
 import aic.g3t1.consumer.serialization.TaxiPositionKryoSerializer;
 import aic.g3t1.consumer.topology.AicTopology;
 import org.apache.storm.Config;
@@ -26,6 +27,7 @@ public class Main {
         config.registerSerialization(Date.class);
         config.registerSerialization(IncrementDistanceOperation.class);
         config.registerSerialization(SetAverageSpeedOperation.class);
+        config.registerSerialization(UpdateLocationOperation.class);
         config.setDebug(true);
         config.setNumWorkers(3);
         return config;
