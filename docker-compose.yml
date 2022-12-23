@@ -70,7 +70,8 @@ services:
 
   interface-server:
     build:
-      context: ./interface-server
+      context: .
+      dockerfile: interface-server/Dockerfile
     depends_on:
       - redis
     networks:

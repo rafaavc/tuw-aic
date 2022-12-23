@@ -1,11 +1,13 @@
 FROM openjdk:11-bullseye
 
-WORKDIR /app
+WORKDIR /opt
 
 # so that it doesn't download it when gradlew is called
 RUN wget https://services.gradle.org/distributions/gradle-7.6-bin.zip
 
-COPY . .
+COPY . /app
+
+WORKDIR /app/interface-server
 
 RUN ./gradlew build --no-daemon
 

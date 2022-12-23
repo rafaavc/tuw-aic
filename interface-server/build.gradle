@@ -12,8 +12,19 @@ repositories {
     mavenCentral()
 }
 
+//configurations.configureEach {
+//    exclude group: "org.slf4j", module: "slf4j-simple"
+//    exclude group: "org.slf4j", module: "slf4j-api"
+//}
+
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.data:spring-data-redis'
+    implementation 'redis.clients:jedis'
+
+    implementation project(':common')
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

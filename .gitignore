@@ -8,6 +8,8 @@ env/
 
 .gradle/
 gradle*
+!gradle/
+!gradle-wrapper.properties
 build/
 
 .DS_Store
