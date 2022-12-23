@@ -16,7 +16,9 @@
 @import "~bootstrap/scss/helpers";
 
 body {
+  height: 100vh;
 }
 
 #app {
+  padding: 2rem 3rem;
 }

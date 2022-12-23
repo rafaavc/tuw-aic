@@ -3,10 +3,12 @@ import { RouterView } from "vue-router"
 </script>
 
 <template>
-  <header>
+  <header class="container-fluid">
+    <h1>Taxi Fleet Monitoring</h1>
   </header>
-
-  <RouterView />
+  <main class="container-fluid">
+    <RouterView />
+  </main>
 </template>
 
 <style scoped lang="scss">
