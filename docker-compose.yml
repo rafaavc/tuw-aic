@@ -68,6 +68,18 @@ services:
     environment:
       WAIT_NIMBUS: consumer:6627
 
+  interface-server:
+    build:
+      context: ./interface-server
+    depends_on:
+      - redis
+    networks:
+      - storm
+    ports:
+      - "8080:8080"
+    environment:
+      REDIS_HOST: redis:6379
+
   redis:
     container_name: redis
     build:
