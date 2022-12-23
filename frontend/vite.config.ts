@@ -5,6 +5,7 @@ import vue from "@vitejs/plugin-vue"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  envDir: fileURLToPath(new URL("./environments", import.meta.url)),
   plugins: [vue()],
   resolve: {
     alias: {
