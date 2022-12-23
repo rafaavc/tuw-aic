@@ -2,6 +2,7 @@ version: "3"
 
 services:
   kafka:
+    container_name: aic-kafka
     build: kafka
     depends_on:
       - zookeeper
@@ -15,6 +16,7 @@ services:
       - storm
 
   producer:
+    container_name: aic-producer
     build:
       context: .
       dockerfile: producer/Dockerfile
@@ -32,6 +34,7 @@ services:
 
 
   consumer:
+    container_name: aic-consumer
     build:
       context: .
       dockerfile: consumer/Dockerfile
@@ -49,15 +52,16 @@ services:
       - '8080:8080' # Storm UI
 
   zookeeper:
+    container_name: aic-zookeeper
     image: 'bitnami/zookeeper:latest'
     platform: linux/amd64
-    container_name: zookeeper
     environment:
       ALLOW_ANONYMOUS_LOGIN: yes
     networks:
       - storm
 
   storm-supervisor:
+    container_name: aic-supervisor
     build: storm-supervisor
     platform: linux/amd64
     depends_on:
@@ -69,13 +73,12 @@ services:
       WAIT_NIMBUS: consumer:6627
 
   redis:
-    container_name: redis
-    build:
-      context: ./redis
+    container_name: aic-redis
+    build: redis
+#    ports:
+#      - '6379:6379' # Local inspection
     networks:
       - storm
-#    ports:
-#      - 6379:6379
 
 #  redis-example:
 #    build:
