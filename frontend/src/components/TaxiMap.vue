@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="container text-center">
+  <div class="container text-center py-2">
     Map component works!
   </div>
 </template>
