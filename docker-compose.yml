@@ -88,5 +88,12 @@ services:
 #    environment:
 #      REDIS_HOST: redis:6379
 
+  frontend:
+    container_name: aic-frontend
+    build: frontend
+    networks:
+      - web-frontend
+
 networks:
   storm:
+  web-frontend:
