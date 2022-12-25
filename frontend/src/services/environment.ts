@@ -16,7 +16,17 @@ export class Environment {
     [Topic.AREA_VIOLATIONS]: 'areaViolations',
   }
 
+  private static websocketUrlMemo: string | null = null
+  private static eventNamesMemo: TopicEventMapping | null = null
+
   static get websocketUrl(): string {
+    if (this.websocketUrlMemo === null) {
+      this.websocketUrlMemo = this.computeWebsocketUrl()
+    }
+    return this.websocketUrlMemo
+  }
+
+  static computeWebsocketUrl(): string {
     const {
       VITE_BACKEND_PROTOCOL_WS,
       VITE_BACKEND_HOST,
@@ -31,6 +41,13 @@ export class Environment {
     }
     const { protocol, host, port, path } = Object.assign({}, Environment.websocketUrlDefaults, environmentParts)
     return `${protocol}://${host}:${port}${path}`
+  }
+
+  static get eventNames(): TopicEventMapping {
+    if (this.eventNamesMemo === null) {
+      this.eventNamesMemo = this.computeEventNames()
+    }
+    return this.eventNamesMemo
   }
 
   static computeEventNames(): TopicEventMapping {
