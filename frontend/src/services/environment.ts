@@ -1,4 +1,4 @@
-import { Topic, type TopicMapping } from "@/models/topic";
+import { Topic, type TopicEventMapping } from "@/models/topic";
 
 export class Environment {
 
@@ -9,7 +9,7 @@ export class Environment {
     path: '',
   }
 
-  private static readonly topicDefaults: TopicMapping = {
+  private static readonly topicDefaults: TopicEventMapping = {
     [Topic.DRIVING_TAXIS]: 'drivingTaxis',
     [Topic.TAXI_DISTANCES]: 'distances',
     [Topic.SPEEDING_INCIDENTS]: 'speedingIncidents',
@@ -33,14 +33,14 @@ export class Environment {
     return `${protocol}://${host}:${port}${path}`
   }
 
-  static get eventNames(): TopicMapping {
+  static computeEventNames(): TopicEventMapping {
     const {
       VITE_WS_TOPIC_DRIVING_TAXIS,
       VITE_WS_TOPIC_TAXI_DISTANCES,
       VITE_WS_TOPIC_SPEEDING_INCIDENTS,
       VITE_WS_TOPIC_AREA_VIOLATIONS,
     } = import.meta.env
-    const environmentTopics: Partial<TopicMapping> = {
+    const environmentTopics: Partial<TopicEventMapping> = {
       [Topic.DRIVING_TAXIS]: VITE_WS_TOPIC_DRIVING_TAXIS,
       [Topic.TAXI_DISTANCES]: VITE_WS_TOPIC_TAXI_DISTANCES,
       [Topic.SPEEDING_INCIDENTS]: VITE_WS_TOPIC_SPEEDING_INCIDENTS,

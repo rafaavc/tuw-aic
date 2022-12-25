@@ -5,4 +5,4 @@ export enum Topic {
   AREA_VIOLATIONS,
 }
 
-export type TopicMapping = Record<Topic, string>
+export type TopicEventMapping = Record<Topic, string>
