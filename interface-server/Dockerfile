@@ -5,7 +5,9 @@ WORKDIR /opt
 # so that it doesn't download it when gradlew is called
 RUN wget https://services.gradle.org/distributions/gradle-7.6-bin.zip
 
-COPY . /app
+COPY ./interface-server /app/interface-server
+COPY ./common /app/common
+COPY ./settings.gradle /app
 
 WORKDIR /app/interface-server
 

@@ -1,10 +1,9 @@
 package aic.g3t1.consumer.redis.operation;
 
+import aic.g3t1.common.redis.RedisHashes;
 import redis.clients.jedis.JedisCommands;
 
 public class UpdateLocationOperation implements RedisOperation {
-
-    public static final String R_LOCATION_HASH = "location";
     private static final long serialVersionUID = -1845286694277615005L;
 
     private final Integer taxiNumber;
@@ -23,7 +22,7 @@ public class UpdateLocationOperation implements RedisOperation {
 
     @Override
     public void perform(JedisCommands commands) {
-        commands.hset(R_LOCATION_HASH, String.valueOf(taxiNumber),  location);
+        commands.hset(RedisHashes.R_LOCATION_HASH, String.valueOf(taxiNumber),  location);
     }
 
     @Override
