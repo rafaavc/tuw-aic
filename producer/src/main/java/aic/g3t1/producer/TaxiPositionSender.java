@@ -36,7 +36,7 @@ public class TaxiPositionSender implements Runnable {
             producer.send(record);
             positionsSent++;
         }
-        System.out.println("Sent positions with timestamp = " + nextTimestamp);
+        //System.out.println("Sent positions with timestamp = " + nextTimestamp);
 
         if (positionsSent >= taxiPositions.size()) {
             System.out.println("All available taxi positions were sent, closing.");

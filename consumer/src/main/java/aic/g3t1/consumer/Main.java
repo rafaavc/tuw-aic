@@ -29,7 +29,7 @@ public class Main {
         config.registerSerialization(SetAverageSpeedOperation.class);
         config.registerSerialization(UpdateLocationOperation.class);
         config.setDebug(true);
-        config.setNumWorkers(3);
+        config.setNumWorkers(5);
         return config;
     }
 

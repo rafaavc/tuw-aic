@@ -25,7 +25,7 @@ public class AicKafkaSpout extends KafkaSpout<String, TaxiPosition> {
         properties.setProperty("group.id", EnvironmentVariables.getVariable("KAFKA_GROUP_ID"));
         properties.setProperty("bootstrap.servers", bootstrapServer);
         properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.setProperty("value.deserializer", "aic.g3t1.common.taxiposition.TaxiPositionDeserializer");
+        properties.setProperty("value.deserializer", "aic.g3t1.common.model.taxiposition.TaxiPositionDeserializer");
 
         var builder = new KafkaSpoutConfig.Builder<String, TaxiPosition>(bootstrapServer, KAFKA_TOPIC);
         builder.setProp(properties);

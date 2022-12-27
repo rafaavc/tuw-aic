@@ -15,7 +15,7 @@ public class ConsumerFactory {
         properties.setProperty("enable.auto.commit", "true");
         properties.setProperty("auto.commit.interval.ms", "1000");
         properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.setProperty("value.deserializer", "aic.g3t1.common.taxiposition.TaxiPositionDeserializer");
+        properties.setProperty("value.deserializer", "aic.g3t1.common.model.taxiposition.TaxiPositionDeserializer");
 
         return new KafkaConsumer<>(properties);
     }

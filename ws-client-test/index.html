@@ -7,13 +7,12 @@
     <script src="./sockjs.min.js"></script>
 
     <script type="text/javascript">
-        let stompClient;
         function connect() {
-            const socket = new SockJS('http://localhost:8080/ws');
-            stompClient = Stomp.over(socket);
+            const socket = new SockJS('http://localhost:10002/ws');
+            const stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe('/topic/notifications', function (msg) {
-                    console.log("Received nootification", JSON.parse(msg.body))
+                    console.log("Received notification", JSON.parse(msg.body))
                 });
                 stompClient.subscribe('/topic/taxis', function (msg) {
                     console.log("Received taxi info", JSON.parse(msg.body))
