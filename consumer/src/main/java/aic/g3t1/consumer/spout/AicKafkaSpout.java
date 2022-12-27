@@ -2,7 +2,7 @@ package aic.g3t1.consumer.spout;
 
 import aic.g3t1.common.environment.EnvironmentVariables;
 import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import org.apache.storm.kafka.spout.KafkaSpout;
 import org.apache.storm.kafka.spout.KafkaSpoutConfig;
 

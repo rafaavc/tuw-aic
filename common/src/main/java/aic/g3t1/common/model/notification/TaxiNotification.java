@@ -1,19 +1,18 @@
-package aic.g3t1.interfaceserver.model;
+package aic.g3t1.common.model.notification;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Date;
 
 public class TaxiNotification implements Serializable {
-    enum Type {
-        SPEEDING,
-        LEAVING_PREDEFINED_AREA
-    }
-
     private final Type type;
     private final Date timestamp;
     private final int taxiNumber;
 
-    public TaxiNotification(Type type, Date timestamp, int taxiNumber) {
+    public TaxiNotification(@JsonProperty("type") Type type,
+                            @JsonProperty("timestamp") Date timestamp,
+                            @JsonProperty("taxiNumber") int taxiNumber) {
         this.type = type;
         this.timestamp = timestamp;
         this.taxiNumber = taxiNumber;
@@ -38,5 +37,10 @@ public class TaxiNotification implements Serializable {
                 ", timestamp=" + timestamp +
                 ", taxiNumber=" + taxiNumber +
                 '}';
+    }
+
+    public enum Type {
+        SPEEDING,
+        LEAVING_PREDEFINED_AREA
     }
 }

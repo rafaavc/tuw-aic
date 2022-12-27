@@ -80,6 +80,7 @@ services:
       - "8080:8080"
     environment:
       REDIS_HOST: redis:6379
+      CORS_ORIGIN: ${INTERFACE_SERVER_CORS_ORIGIN}
 
   redis:
     container_name: redis

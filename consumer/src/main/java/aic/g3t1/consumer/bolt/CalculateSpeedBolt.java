@@ -1,7 +1,7 @@
 package aic.g3t1.consumer.bolt;
 
-import aic.g3t1.common.taxiposition.GeoLocation;
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.GeoLocation;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
@@ -11,10 +11,8 @@ import org.apache.storm.tuple.Tuple;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static aic.g3t1.consumer.bolt.TaxiSpeedFields.F_TAXI_SPEED;
 import static aic.g3t1.consumer.spout.TaxiPositionFields.F_LATITUDE;

@@ -1,6 +1,6 @@
 package aic.g3t1.common.kafka;
 
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import aic.g3t1.common.environment.EnvironmentVariables;
 import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
 import org.apache.kafka.clients.producer.KafkaProducer;

@@ -9,7 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 public class RedisConfiguration {
-
     @Bean
     JedisConnectionFactory jedisConnectionFactory() throws Exception {
         String[] redisHost = EnvironmentVariables.getVariable("REDIS_HOST").split(":");

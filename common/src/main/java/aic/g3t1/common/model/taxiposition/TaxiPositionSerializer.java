@@ -1,4 +1,4 @@
-package aic.g3t1.common.taxiposition;
+package aic.g3t1.common.model.taxiposition;
 
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;

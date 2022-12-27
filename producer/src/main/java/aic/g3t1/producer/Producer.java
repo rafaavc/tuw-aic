@@ -3,7 +3,7 @@ package aic.g3t1.producer;
 import aic.g3t1.common.environment.EnvironmentVariables;
 import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
 import aic.g3t1.common.kafka.ProducerFactory;
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import org.apache.kafka.clients.producer.KafkaProducer;
 
 import java.io.FileNotFoundException;

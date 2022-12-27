@@ -1,7 +1,6 @@
 package aic.g3t1.consumer.bolt;
 
-import aic.g3t1.common.taxiposition.TaxiPosition;
-import aic.g3t1.consumer.redis.operation.IncrementDistanceOperation;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import aic.g3t1.consumer.redis.operation.UpdateLocationOperation;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
