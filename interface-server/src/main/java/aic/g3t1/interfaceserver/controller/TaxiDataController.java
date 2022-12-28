@@ -34,7 +34,6 @@ public class TaxiDataController {
                     .build();
 
             template.convertAndSend(Topic.taxis, data);
-
         }
     }
 

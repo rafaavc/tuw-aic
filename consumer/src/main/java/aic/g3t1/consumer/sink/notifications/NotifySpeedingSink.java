@@ -19,7 +19,6 @@ public class NotifySpeedingSink extends NotifySink {
         super();
 
         notifyEndpoint = EnvironmentVariables.getVariable("NOTIFICATION_SPEEDING_ENDPOINT");
-
         predefinedSpeedLimit = Integer.parseInt(EnvironmentVariables.getVariable("PREDEFINED_SPEED_LIMIT"));
     }
 
