@@ -8,6 +8,8 @@ import aic.g3t1.consumer.bolt.KafkaTupleBolt;
 import aic.g3t1.consumer.bolt.UpdateLocationBolt;
 import aic.g3t1.consumer.sink.DebugSink;
 import aic.g3t1.consumer.sink.StoreInformationSink;
+import aic.g3t1.consumer.sink.notifications.NotifyLeavingAreaSink;
+import aic.g3t1.consumer.sink.notifications.NotifySpeedingSink;
 import aic.g3t1.consumer.spout.AicKafkaSpout;
 import org.apache.storm.Config;
 import org.apache.storm.StormSubmitter;
@@ -33,6 +35,8 @@ public class AicTopology {
     private static final String CALCULATE_SPEED_BOLT_ID = "calculate_speed_bolt";
     private static final String CALCULATE_AVERAGE_SPEED_BOLT_ID = "calculate_average_speed_bolt";
     private static final String UPDATE_LOCATION_BOLT_ID = "update_location_bolt";
+    private static final String NOTIFY_SPEEDING_SINK_ID = "notify_speeding_sink";
+    private static final String NOTIFY_LEAVING_AREA_SINK_ID = "notify_leaving_area_sink";
     private static final String STORE_INFORMATION_SINK_ID = "store_information_sink";
     private static final String DEBUG_SINK_ID = "debug_sink";
 
@@ -57,6 +61,12 @@ public class AicTopology {
 
         BUILDER.setBolt(CALCULATE_SPEED_BOLT_ID, new CalculateSpeedBolt())
                 .fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields(F_TAXI_NUMBER));
+
+        BUILDER.setBolt(NOTIFY_LEAVING_AREA_SINK_ID, new NotifyLeavingAreaSink())
+                .fieldsGrouping(KAFKA_TUPLE_BOLT_ID, new Fields(F_TAXI_NUMBER));
+
+        BUILDER.setBolt(NOTIFY_SPEEDING_SINK_ID, new NotifySpeedingSink())
+                .fieldsGrouping(CALCULATE_SPEED_BOLT_ID, new Fields(F_TAXI_NUMBER));
 
         BUILDER.setBolt(CALCULATE_AVERAGE_SPEED_BOLT_ID, new CalculateAverageSpeedBolt())
                 .fieldsGrouping(CALCULATE_SPEED_BOLT_ID, new Fields(F_TAXI_NUMBER));

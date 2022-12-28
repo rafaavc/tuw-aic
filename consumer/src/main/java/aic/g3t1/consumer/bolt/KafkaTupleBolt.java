@@ -1,6 +1,6 @@
 package aic.g3t1.consumer.bolt;
 
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;

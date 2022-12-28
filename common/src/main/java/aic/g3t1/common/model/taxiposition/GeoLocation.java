@@ -1,4 +1,4 @@
-package aic.g3t1.common.taxiposition;
+package aic.g3t1.common.model.taxiposition;
 
 public class GeoLocation {
 

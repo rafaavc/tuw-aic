@@ -1,6 +1,6 @@
 package aic.g3t1.consumer.serialization;
 
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
