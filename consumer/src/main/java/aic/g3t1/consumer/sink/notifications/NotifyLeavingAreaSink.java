@@ -16,11 +16,14 @@ import static aic.g3t1.consumer.spout.TaxiPositionFields.*;
 public class NotifyLeavingAreaSink extends NotifySink {
     private GeoLocation centerOfForbiddenCity;
     private Set<Integer> infractions;
+    private final String notifyEndpoint;
     private final int predefinedAreaRadius;
     private final double latitude, longitude;
 
     public NotifyLeavingAreaSink() throws MissingEnvironmentVariableException {
         super();
+
+        notifyEndpoint = EnvironmentVariables.getVariable("NOTIFICATION_LEAVING_AREA_ENDPOINT");
 
         latitude = Double.parseDouble(EnvironmentVariables.getVariable("FORBIDDEN_CITY_LAT"));
         longitude = Double.parseDouble(EnvironmentVariables.getVariable("FORBIDDEN_CITY_LON"));
@@ -51,8 +54,8 @@ public class NotifyLeavingAreaSink extends NotifySink {
         else if (!infractions.contains(taxiNumber)) {
             // only notify if this is the first time the infraction is detected
             infractions.add(taxiNumber);
-            var notification = new TaxiNotification(TaxiNotification.Type.LEAVING_PREDEFINED_AREA, new Date(), taxiNumber);
-            sendNotification(notification);
+            var notification = new TaxiNotification(new Date(), taxiNumber);
+            sendNotification(notification, notifyEndpoint);
         }
 
         collector.ack(input);

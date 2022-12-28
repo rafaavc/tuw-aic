@@ -11,10 +11,15 @@ import static aic.g3t1.consumer.bolt.TaxiSpeedFields.F_TAXI_SPEED;
 import static aic.g3t1.consumer.spout.TaxiPositionFields.F_TAXI_NUMBER;
 
 public class NotifySpeedingSink extends NotifySink {
-    int predefinedSpeedLimit;
+    private final int predefinedSpeedLimit;
+    private final String notifyEndpoint;
+
 
     public NotifySpeedingSink() throws MissingEnvironmentVariableException {
         super();
+
+        notifyEndpoint = EnvironmentVariables.getVariable("NOTIFICATION_SPEEDING_ENDPOINT");
+
         predefinedSpeedLimit = Integer.parseInt(EnvironmentVariables.getVariable("PREDEFINED_SPEED_LIMIT"));
     }
 
@@ -23,8 +28,8 @@ public class NotifySpeedingSink extends NotifySink {
         double speed = input.getDoubleByField(F_TAXI_SPEED);
         if (speed > predefinedSpeedLimit) {
             int taxiNumber = input.getIntegerByField(F_TAXI_NUMBER);
-            var notification = new TaxiNotification(TaxiNotification.Type.SPEEDING, new Date(), taxiNumber);
-            sendNotification(notification);
+            var notification = new TaxiNotification(new Date(), taxiNumber);
+            sendNotification(notification, notifyEndpoint);
         }
         collector.ack(input);
     }

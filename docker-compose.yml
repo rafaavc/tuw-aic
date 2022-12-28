@@ -45,7 +45,8 @@ services:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
       REDIS_HOST: redis:6379
-      NOTIFICATION_SERVER_ENDPOINT: http://interface-server:8080/notification
+      NOTIFICATION_SPEEDING_ENDPOINT: http://interface-server:8080/notification/speeding
+      NOTIFICATION_LEAVING_AREA_ENDPOINT: http://interface-server:8080/notification/leaving-area
       FORBIDDEN_CITY_LAT: ${FORBIDDEN_CITY_LAT}
       FORBIDDEN_CITY_LON: ${FORBIDDEN_CITY_LON}
       PREDEFINED_AREA_RADIUS: ${PREDEFINED_AREA_RADIUS}

@@ -12,8 +12,13 @@ public class NotificationController {
     @Autowired
     private SimpMessagingTemplate template;
 
-    @PostMapping
-    public void notify(@RequestBody TaxiNotification notification) {
-        this.template.convertAndSend(Topic.notifications, notification);
+    @PostMapping("/speeding")
+    public void notifySpeeding(@RequestBody TaxiNotification notification) {
+        this.template.convertAndSend(Topic.speedingNotifications, notification);
+    }
+
+    @PostMapping("/leaving-area")
+    public void notifyLeavingArea(@RequestBody TaxiNotification notification) {
+        this.template.convertAndSend(Topic.leavingAreaNotifications, notification);
     }
 }

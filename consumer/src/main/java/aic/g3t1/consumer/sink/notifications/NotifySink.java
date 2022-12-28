@@ -1,7 +1,5 @@
 package aic.g3t1.consumer.sink.notifications;
 
-import aic.g3t1.common.environment.EnvironmentVariables;
-import aic.g3t1.common.exceptions.MissingEnvironmentVariableException;
 import aic.g3t1.common.model.notification.TaxiNotification;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.storm.task.OutputCollector;
@@ -18,18 +16,13 @@ import java.util.Map;
 abstract class NotifySink extends BaseRichBolt {
     protected OutputCollector collector;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final String notificationServerEndpoint;
     private HttpClient httpClient;
 
-    public NotifySink() throws MissingEnvironmentVariableException {
-        notificationServerEndpoint = EnvironmentVariables.getVariable("NOTIFICATION_SERVER_ENDPOINT");
-    }
-
-    protected void sendNotification(TaxiNotification notification) {
+    protected void sendNotification(TaxiNotification notification, String endpoint) {
         try {
             var request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(notification)))
-                    .uri(URI.create(notificationServerEndpoint))
+                    .uri(URI.create(endpoint))
                     .header("Content-Type", "application/json")
                     .build();
 
