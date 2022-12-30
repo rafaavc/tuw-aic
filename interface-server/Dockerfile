@@ -8,6 +8,7 @@ RUN wget https://services.gradle.org/distributions/gradle-7.6-bin.zip
 COPY ./interface-server /app/interface-server
 COPY ./common /app/common
 COPY ./settings.gradle /app
+COPY ./gradlew* /app/interface-server
 
 WORKDIR /app/interface-server
 
