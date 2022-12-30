@@ -2,6 +2,7 @@ version: "3"
 
 services:
   kafka:
+    container_name: aic-kafka
     build: kafka
     depends_on:
       - zookeeper
@@ -15,6 +16,7 @@ services:
       - storm
 
   producer:
+    container_name: aic-producer
     build:
       context: .
       dockerfile: producer/Dockerfile
@@ -31,6 +33,7 @@ services:
       NUMBER_TAXIS: ${NUMBER_TAXIS}
 
   consumer:
+    container_name: aic-consumer
     build:
       context: .
       dockerfile: consumer/Dockerfile
@@ -55,15 +58,16 @@ services:
       - '8080:8080' # Storm UI
 
   zookeeper:
+    container_name: aic-zookeeper
     image: 'bitnami/zookeeper:latest'
     platform: linux/amd64
-    container_name: zookeeper
     environment:
       ALLOW_ANONYMOUS_LOGIN: yes
     networks:
       - storm
 
   storm-supervisor:
+    container_name: aic-supervisor
     build: storm-supervisor
     platform: linux/amd64
     depends_on:
@@ -75,6 +79,7 @@ services:
       WAIT_NIMBUS: consumer:6627
 
   interface-server:
+    container_name: aic-interface-server
     build:
       context: .
       dockerfile: interface-server/Dockerfile
@@ -82,6 +87,7 @@ services:
       - redis
     networks:
       - storm
+      - web-frontend
     ports:
       - "10002:8080"
     environment:
@@ -89,11 +95,34 @@ services:
       CORS_ORIGIN: ${INTERFACE_SERVER_CORS_ORIGIN}
 
   redis:
-    container_name: redis
-    build:
-      context: ./redis
+    container_name: aic-redis
+    build: redis
+#    ports:
+#      - '6379:6379' # Local inspection
     networks:
       - storm
 
+#  redis-example:
+#    build:
+#      context: .
+#      dockerfile: ./redis-example/Dockerfile
+#    depends_on:
+#      - redis
+#    networks:
+#      - storm
+#    environment:
+#      REDIS_HOST: redis:6379
+
+  frontend:
+    container_name: aic-frontend
+    build: frontend
+    depends_on:
+      - interface-server
+    ports:
+      - '8081:8081'
+    networks:
+      - web-frontend
+
 networks:
   storm:
+  web-frontend:
