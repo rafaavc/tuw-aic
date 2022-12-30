@@ -1,5 +1,5 @@
 import { Environment } from "@/services/environment";
-import type { Topic, TopicDataMapping } from "@/models/topic";
+import type { Topic, TopicDataMapping } from "@/models";
 import { Observable } from "rxjs";
 import SockJS from "sockjs-client/dist/sockjs";
 import { CompatClient, Stomp } from "@stomp/stompjs";

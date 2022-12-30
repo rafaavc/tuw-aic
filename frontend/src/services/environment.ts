@@ -1,4 +1,4 @@
-import { Topic, type TopicEventMapping } from "@/models/topic";
+import { Topic, type TopicEventMapping } from "@/models";
 import { nameFromValue } from "@/services/enums";
 
 export class Environment {

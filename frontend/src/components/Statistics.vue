@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { WebsocketClient } from "@/services/websocket-client";
-import { Topic } from "@/models/topic";
+import { type TaxiNotification, type TaxiNumber, Topic } from "@/models";
 import { computed, reactive, ref } from "vue";
 import { rounded } from "@/services/numbers";
-import type { TaxiNotification } from "@/models/taxi-notification";
 
 const drivingTaxiCount = ref<number>(0)
 const totalDistance = ref<number>(0)
