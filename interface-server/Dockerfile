@@ -1,5 +1,10 @@
 FROM openjdk:11-bullseye
 
+# Install wait-for
+RUN apt-get -q update && apt-get -qy install netcat
+ADD https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for /wait-for
+RUN chmod +x /wait-for
+
 WORKDIR /opt
 
 # so that it doesn't download it when gradlew is called
@@ -14,4 +19,4 @@ WORKDIR /app/interface-server
 
 RUN ./gradlew build --no-daemon
 
-ENTRYPOINT ["java", "-jar", "./build/libs/interface-server-0.0.1-SNAPSHOT.jar"]
+CMD ["./start.sh"]
