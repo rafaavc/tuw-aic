@@ -116,6 +116,8 @@ services:
   frontend:
     container_name: aic-frontend
     build: frontend
+    depends_on:
+      - interface-server
     ports:
       - '8081:8081'
     networks:
