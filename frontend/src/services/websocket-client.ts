@@ -19,6 +19,7 @@ export class WebsocketClient {
     return new Promise((resolve) => {
       if (this.stompClient.connected) {
         resolve()
+        return
       }
       this.stompClient.connect({}, () => resolve())
     })
