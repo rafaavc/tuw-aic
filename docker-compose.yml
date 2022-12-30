@@ -86,6 +86,7 @@ services:
       - redis
     networks:
       - storm
+      - web-frontend
     ports:
       - "10002:8080"
     environment:
