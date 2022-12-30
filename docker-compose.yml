@@ -79,6 +79,7 @@ services:
       WAIT_NIMBUS: consumer:6627
 
   interface-server:
+    container_name: aic-interface-server
     build:
       context: .
       dockerfile: interface-server/Dockerfile
