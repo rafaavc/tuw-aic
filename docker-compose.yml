@@ -32,7 +32,6 @@ services:
       TAXI_DATA_SPEED: ${TAXI_DATA_SPEED}
       NUMBER_TAXIS: ${NUMBER_TAXIS}
 
-
   consumer:
     container_name: aic-consumer
     build:
@@ -42,12 +41,19 @@ services:
       - zookeeper
       - kafka
       - redis
+      - interface-server
     networks:
       - storm
     environment:
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
       REDIS_HOST: redis:6379
+      NOTIFICATION_SPEEDING_ENDPOINT: http://interface-server:8080/notification/speeding
+      NOTIFICATION_LEAVING_AREA_ENDPOINT: http://interface-server:8080/notification/leaving-area
+      FORBIDDEN_CITY_LAT: ${FORBIDDEN_CITY_LAT}
+      FORBIDDEN_CITY_LON: ${FORBIDDEN_CITY_LON}
+      PREDEFINED_AREA_RADIUS: ${PREDEFINED_AREA_RADIUS}
+      PREDEFINED_SPEED_LIMIT: ${PREDEFINED_SPEED_LIMIT}
     ports:
       - '8080:8080' # Storm UI
 
@@ -71,6 +77,20 @@ services:
       - storm
     environment:
       WAIT_NIMBUS: consumer:6627
+
+  interface-server:
+    build:
+      context: .
+      dockerfile: interface-server/Dockerfile
+    depends_on:
+      - redis
+    networks:
+      - storm
+    ports:
+      - "10002:8080"
+    environment:
+      REDIS_HOST: redis:6379
+      CORS_ORIGIN: ${INTERFACE_SERVER_CORS_ORIGIN}
 
   redis:
     container_name: aic-redis

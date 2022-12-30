@@ -82,7 +82,9 @@ WORKDIR /opt
 # so that it doesn't download it when gradlew is called
 RUN wget https://services.gradle.org/distributions/gradle-7.4-bin.zip
 
-COPY . /app
+COPY ./consumer /app/consumer
+COPY ./common /app/common
+COPY ./settings.gradle /app
 
 WORKDIR /app/consumer
 
