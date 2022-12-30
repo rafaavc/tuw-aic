@@ -1,12 +1,10 @@
-import type { TaxiDistances } from "@/models/taxi-distances";
-import type { AreaViolation } from "@/models/area-violation";
-import type { SpeedingIncident } from "@/models/speeding-incident";
+import type { TaxiData } from "@/models/taxi-data";
+import type { TaxiNotification } from "@/models/taxi-notification";
 
 export enum Topic {
-  DRIVING_TAXIS,
-  TAXI_DISTANCES,
-  SPEEDING_INCIDENTS,
-  AREA_VIOLATIONS,
+  TAXIS = 'taxis',
+  LEAVING_AREA = 'leaving_area',
+  SPEEDING = 'speeding',
 }
 
 export type TopicEventMapping = Record<Topic, string>
@@ -14,8 +12,7 @@ export type TopicEventMapping = Record<Topic, string>
 type TopicDataMappingBase = Record<Topic, any>
 
 export interface TopicDataMapping extends TopicDataMappingBase {
-  [Topic.DRIVING_TAXIS]: any
-  [Topic.TAXI_DISTANCES]: TaxiDistances
-  [Topic.AREA_VIOLATIONS]: AreaViolation
-  [Topic.SPEEDING_INCIDENTS]: SpeedingIncident
+  [Topic.TAXIS]: TaxiData
+  [Topic.LEAVING_AREA]: TaxiNotification
+  [Topic.SPEEDING]: TaxiNotification
 }

@@ -2,35 +2,25 @@
 import { WebsocketClient } from "@/services/websocket-client";
 import { Topic } from "@/models/topic";
 import { computed, reactive, ref } from "vue";
-import type { AreaViolation } from "@/models/area-violation";
-import type { SpeedingIncident } from "@/models/speeding-incident";
 import { rounded } from "@/services/numbers";
+import type { TaxiNotification } from "@/models/taxi-notification";
 
 const drivingTaxiCount = ref<number>(0)
 const totalDistance = ref<number>(0)
 const totalDistanceRounded = computed(() => rounded(totalDistance.value, 2))
-const areaViolations = reactive<AreaViolation[]>([])
-const speedingIncidents = reactive<SpeedingIncident[]>([])
+const areaViolations = reactive<TaxiNotification[]>([])
+const speedingIncidents = reactive<TaxiNotification[]>([])
 
 const socket = new WebsocketClient()
 socket.connect().then(() => {
-  socket.on(Topic.TAXI_DISTANCES).subscribe((distances) => {
-    const excludedTaxis = new Set(areaViolations.map((violation) => violation.taxiNumber))
-    let newDrivingTaxiCount = 0
-    let newTotalDistance = 0
-    for (let [taxiNumber, distance] of Object.entries(distances)) {
-      if (!excludedTaxis.has(taxiNumber)) {
-        newDrivingTaxiCount++
-        newTotalDistance += distance
-      }
-    }
-    drivingTaxiCount.value = newDrivingTaxiCount
-    totalDistance.value = newTotalDistance
+  socket.on(Topic.TAXIS).subscribe((data) => {
+    drivingTaxiCount.value = data.amountOfTaxis
+    totalDistance.value = data.totalDistance
   })
-  socket.on(Topic.AREA_VIOLATIONS).subscribe((violation) => {
+  socket.on(Topic.LEAVING_AREA).subscribe((violation) => {
     areaViolations.push(violation)
   })
-  socket.on(Topic.SPEEDING_INCIDENTS).subscribe((incident) => {
+  socket.on(Topic.SPEEDING).subscribe((incident) => {
     speedingIncidents.push(incident)
   })
 })

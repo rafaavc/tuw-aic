@@ -1,4 +1,5 @@
 import { Topic, type TopicEventMapping } from "@/models/topic";
+import { nameFromValue } from "@/services/enums";
 
 export class Environment {
 
@@ -7,13 +8,6 @@ export class Environment {
     host: 'localhost',
     port: 80,
     path: '',
-  }
-
-  private static readonly topicDefaults: TopicEventMapping = {
-    [Topic.DRIVING_TAXIS]: 'drivingTaxis',
-    [Topic.TAXI_DISTANCES]: 'distances',
-    [Topic.SPEEDING_INCIDENTS]: 'speedingIncidents',
-    [Topic.AREA_VIOLATIONS]: 'areaViolations',
   }
 
   private static websocketUrlMemo: string | null = null
@@ -52,18 +46,22 @@ export class Environment {
 
   static computeEventNames(): TopicEventMapping {
     const {
-      VITE_WS_TOPIC_DRIVING_TAXIS,
-      VITE_WS_TOPIC_TAXI_DISTANCES,
-      VITE_WS_TOPIC_SPEEDING_INCIDENTS,
-      VITE_WS_TOPIC_AREA_VIOLATIONS,
+      VITE_WS_TOPIC_TAXIS,
+      VITE_WS_TOPIC_SPEEDING,
+      VITE_WS_TOPIC_LEAVING_AREA,
     } = import.meta.env
     const environmentTopics: Partial<TopicEventMapping> = {
-      [Topic.DRIVING_TAXIS]: VITE_WS_TOPIC_DRIVING_TAXIS,
-      [Topic.TAXI_DISTANCES]: VITE_WS_TOPIC_TAXI_DISTANCES,
-      [Topic.SPEEDING_INCIDENTS]: VITE_WS_TOPIC_SPEEDING_INCIDENTS,
-      [Topic.AREA_VIOLATIONS]: VITE_WS_TOPIC_AREA_VIOLATIONS,
+      [Topic.TAXIS]: VITE_WS_TOPIC_TAXIS,
+      [Topic.SPEEDING]: VITE_WS_TOPIC_SPEEDING,
+      [Topic.LEAVING_AREA]: VITE_WS_TOPIC_LEAVING_AREA,
     }
-    return Object.assign({}, this.topicDefaults, environmentTopics)
+    const undefinedTopics = Object.entries(environmentTopics)
+      .filter(([_, v]) => typeof v === 'undefined')
+      .map(([k, _]) => nameFromValue(Topic, k))
+    if (undefinedTopics.length > 0) {
+      throw new Error(`Topic event names not defined: ${undefinedTopics}`)
+    }
+    return environmentTopics as TopicEventMapping
   }
 
   private static tryParseInt(maybeInt: string | undefined): number | undefined {
