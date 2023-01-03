@@ -18,6 +18,7 @@ public class Main {
             topology.submit(getConfig());
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
 
