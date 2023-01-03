@@ -76,6 +76,7 @@ services:
       - consumer
     networks:
       - storm
+      - web-backend
     environment:
       WAIT_ZOOKEEPER: zookeeper:2181
       WAIT_NIMBUS: consumer:6627
@@ -88,7 +89,7 @@ services:
     depends_on:
       - redis
     networks:
-      - storm
+      - web-backend
       - web-frontend
     ports:
       - "10002:8080"
@@ -101,8 +102,10 @@ services:
     build: redis
 #    ports:
 #      - '6379:6379' # Local inspection
+    restart: always
     networks:
       - storm
+      - web-backend
 
 #  redis-example:
 #    build:
@@ -127,4 +130,5 @@ services:
 
 networks:
   storm:
+  web-backend:
   web-frontend:
