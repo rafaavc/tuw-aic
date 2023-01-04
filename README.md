@@ -105,6 +105,7 @@ The following environment variables may be set in the `.env` file:
 - `FORBIDDEN_CITY_LAT` - The latitude of the forbidden city in Beijing
 - `FORBIDDEN_CITY_LON` - The longitude of the forbidden city in Beijing
 - `PREDEFINED_AREA_RADIUS` - The radius around the forbidden city where taxis can drive
+- `PREDEFINED_AREA_DISCARD_RADIUS` - Taxis that drive beyond this radius around the forbidden city are discarded.
 - `PREDEFINED_SPEED_LIMIT` - The speed limit of the taxis
 
 ## How to debug
