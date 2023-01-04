@@ -107,17 +107,6 @@ services:
       - storm
       - web-backend
 
-#  redis-example:
-#    build:
-#      context: .
-#      dockerfile: ./redis-example/Dockerfile
-#    depends_on:
-#      - redis
-#    networks:
-#      - storm
-#    environment:
-#      REDIS_HOST: redis:6379
-
   frontend:
     container_name: aic-frontend
     build: frontend
