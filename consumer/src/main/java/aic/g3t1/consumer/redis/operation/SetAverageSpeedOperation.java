@@ -9,6 +9,12 @@ public class SetAverageSpeedOperation implements RedisOperation {
     private final int taxiNumber;
     private final double avgSpeed;
 
+    // Kryo no-arg constructor
+    public SetAverageSpeedOperation() {
+        taxiNumber = -1;
+        avgSpeed = 0;
+    }
+
     public SetAverageSpeedOperation(int taxiNumber, double avgSpeed) {
         this.taxiNumber = taxiNumber;
         this.avgSpeed = avgSpeed;
