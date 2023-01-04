@@ -29,8 +29,8 @@ public class TaxiData implements Serializable {
     private static class IndividualTaxiData implements Serializable {
         public final int number;
         public final Location location;
-        public final double distance, averageSpeed;
-        public IndividualTaxiData(int number, Location location, double distance, double averageSpeed) {
+        public final Double distance, averageSpeed;
+        public IndividualTaxiData(int number, Location location, Double distance, Double averageSpeed) {
             this.number = number;
             this.location = location;
             this.distance = distance;
@@ -38,7 +38,7 @@ public class TaxiData implements Serializable {
         }
 
         public double getDistance() {
-            return distance;
+            return distance == null ? 0. : distance;
         }
     }
 
@@ -77,16 +77,13 @@ public class TaxiData implements Serializable {
 
         public TaxiData build() {
             var taxis = new ArrayList<IndividualTaxiData>();
-            var taxiNumbers = new HashSet<>(distances.keySet());
-            taxiNumbers.retainAll(averageSpeeds.keySet());
-            taxiNumbers.retainAll(locations.keySet());
 
-            for (int number : taxiNumbers) {
+            for (int taxiNumber : locations.keySet()) {
                 taxis.add(new IndividualTaxiData(
-                    number,
-                    locations.get(number),
-                    distances.get(number),
-                    averageSpeeds.get(number)
+                    taxiNumber,
+                    locations.get(taxiNumber),
+                    distances.get(taxiNumber),
+                    averageSpeeds.get(taxiNumber)
                 ));
             }
 
