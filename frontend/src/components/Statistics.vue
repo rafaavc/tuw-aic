@@ -18,11 +18,11 @@ socket.connect().then(() => {
     totalDistance.value = data.totalDistance
   })
   socket.on(Topic.LEAVING_AREA).subscribe((violation) => {
-    const { taxiNumber } = violation;
+    const { taxiNumber } = violation
     pushToValue(areaViolations, taxiNumber, violation)
   })
   socket.on(Topic.SPEEDING).subscribe((incident) => {
-    const { taxiNumber } = incident;
+    const { taxiNumber } = incident
     pushToValue(speedingIncidents, taxiNumber, incident)
   })
 })
