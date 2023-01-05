@@ -14,5 +14,11 @@ supervisor.slots.ports:
   - 6701
   - 6702
   - 6703
+  - 6704
+  - 6705
+  - 6706
+  - 6707
+  - 6708
+  - 6709
 
 worker.childopts: "-Xmx%HEAP-MEM%m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=artifacts/heapdump"

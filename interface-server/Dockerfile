@@ -17,6 +17,8 @@ COPY ./gradlew* /app/interface-server
 
 WORKDIR /app/interface-server
 
+RUN chmod +x ./start.sh
+
 RUN ./gradlew build --no-daemon
 
 CMD ["./start.sh"]

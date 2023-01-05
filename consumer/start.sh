@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "[WAIT] Waiting for Zookeeper... ($WAIT_ZOOKEEPER)"
+/wait-for "$WAIT_ZOOKEEPER" -t 60 || exit 100
+echo "[WAIT] Zookeeper connected!"
+
 echo "[WAIT] Waiting for Kafka... ($KAFKA_BOOTSTRAP_SERVER)"
 /wait-for "$KAFKA_BOOTSTRAP_SERVER" -t 60 || exit 101
 echo "[WAIT] Kafka connected!"

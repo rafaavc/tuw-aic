@@ -45,6 +45,7 @@ services:
     networks:
       - storm
     environment:
+      WAIT_ZOOKEEPER: zookeeper:2181
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
       REDIS_HOST: redis:6379
@@ -75,7 +76,9 @@ services:
       - consumer
     networks:
       - storm
+      - web-backend
     environment:
+      WAIT_ZOOKEEPER: zookeeper:2181
       WAIT_NIMBUS: consumer:6627
 
   interface-server:
@@ -86,7 +89,7 @@ services:
     depends_on:
       - redis
     networks:
-      - storm
+      - web-backend
       - web-frontend
     ports:
       - "10002:8080"
@@ -101,17 +104,7 @@ services:
 #      - '6379:6379' # Local inspection
     networks:
       - storm
-
-#  redis-example:
-#    build:
-#      context: .
-#      dockerfile: ./redis-example/Dockerfile
-#    depends_on:
-#      - redis
-#    networks:
-#      - storm
-#    environment:
-#      REDIS_HOST: redis:6379
+      - web-backend
 
   frontend:
     container_name: aic-frontend
@@ -125,4 +118,5 @@ services:
 
 networks:
   storm:
+  web-backend:
   web-frontend:
