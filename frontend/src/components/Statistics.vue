@@ -1,15 +1,30 @@
 <script setup lang="ts">
-import { WebsocketClient } from "@/services/websocket-client";
-import { type TaxiNotification, type TaxiNumber, Topic } from "@/models";
-import { computed, reactive, ref } from "vue";
-import { rounded } from "@/services/numbers";
-import { pushToValue } from "@/services/maps";
+import { WebsocketClient } from "@/services/websocket-client"
+import { type TaxiNotification, type TaxiNumber, Topic } from "@/models"
+import { computed, reactive, Ref, ref } from "vue"
+import { rounded } from "@/services/numbers"
+import { pushToValue } from "@/services/maps"
 
 const drivingTaxiCount = ref<number>(0)
 const totalDistance = ref<number>(0)
 const totalDistanceRounded = computed(() => rounded(totalDistance.value, 2))
 const areaViolations = reactive<Map<TaxiNumber, TaxiNotification[]>>(new Map())
 const speedingIncidents = reactive<Map<TaxiNumber, TaxiNotification[]>>(new Map())
+
+const dateFormatter = new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeStyle: 'medium' } as any)
+
+function formatDate(date: Date): string {
+  return dateFormatter.format(date)
+}
+
+function last<T>(array: T[]): T {
+  return array[array.length - 1]
+}
+
+function sortByTimestamps(map: Map<TaxiNumber, TaxiNotification[]>): Array<[TaxiNumber, TaxiNotification[]]> {
+  const array = [...map.entries()]
+  return array.sort(([_1, a], [_2, b]) => last(b).timestamp.getTime() - last(a).timestamp.getTime())
+}
 
 const socket = new WebsocketClient()
 socket.connect().then(() => {
