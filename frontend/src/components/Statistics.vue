@@ -53,31 +53,49 @@ socket.connect().then(() => {
     </div>
     <div class="col-12 col-md-4">
       <p class="h4">Area violations</p>
-      <ul v-if="areaViolations.size > 0">
-        <li v-for="[taxiNumber, violations] of areaViolations.entries()">
-          Taxi {{ taxiNumber }}
-          <span v-if="violations.length > 1">
-            ({{ violations.length }}x)
+      <ul v-if="areaViolations.size > 0" class="list-group">
+        <li v-for="[taxiNumber, violations] of sortByTimestamps(areaViolations)"
+            class="list-group-item d-flex justify-content-between align-items-center">
+          <span v-tooltip.right="formatDate(last(violations).timestamp)">
+            Taxi {{ taxiNumber }}
+            <span class="d-md-none">
+              <br>
+              <small>{{ formatDate(last(violations).timestamp) }}</small>
+            </span>
+          </span>
+          <span v-if="violations.length > 1" class="badge bg-primary rounded-pill">
+            {{ violations.length }}
           </span>
         </li>
       </ul>
-      <p v-else>
-        No area violations so far.
-      </p>
+      <div v-else class="card">
+        <div class="card-body">
+          No area violations so far.
+        </div>
+      </div>
     </div>
     <div class="col-12 col-md-4">
       <p class="h4">Speeding incidents</p>
-      <ul v-if="speedingIncidents.size > 0">
-        <li v-for="[taxiNumber, incidents] of speedingIncidents.entries()">
-          Taxi {{ taxiNumber }}
-          <span v-if="incidents.length > 1">
-            ({{ incidents.length }}x)
+      <ul v-if="speedingIncidents.size > 0" class="list-group">
+        <li v-for="[taxiNumber, incidents] of sortByTimestamps(speedingIncidents)"
+            class="list-group-item d-flex justify-content-between align-items-center">
+          <span v-tooltip.right="formatDate(last(incidents).timestamp)">
+            Taxi {{ taxiNumber }}
+            <span class="d-md-none">
+              <br>
+              <small>{{ formatDate(last(incidents).timestamp) }}</small>
+            </span>
+          </span>
+          <span v-if="incidents.length > 1" class="badge bg-primary rounded-pill">
+            {{ incidents.length }}
           </span>
         </li>
       </ul>
-      <p v-else>
-        No speeding incidents so far.
-      </p>
+      <div v-else class="card">
+        <div class="card-body">
+          No speeding incidents so far.
+        </div>
+      </div>
     </div>
   </div>
 </template>
