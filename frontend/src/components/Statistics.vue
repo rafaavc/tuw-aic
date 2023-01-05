@@ -47,9 +47,17 @@ socket.connect().then(() => {
   <div class="row">
     <div class="col-12 col-md-4">
       <p class="h4">Currently driving taxis</p>
-      <p>{{ drivingTaxiCount }}</p>
-      <p class="h4">Overall distances of all taxis</p>
-      <p>{{ totalDistanceRounded }} km</p>
+      <div class="card">
+        <div class="card-body">
+          {{ drivingTaxiCount }}
+        </div>
+      </div>
+      <p class="h4 mt-3">Overall distances of all taxis</p>
+      <div class="card">
+        <div class="card-body">
+          {{ totalDistanceRounded }} km
+        </div>
+      </div>
     </div>
     <div class="col-12 col-md-4">
       <p class="h4">Area violations</p>
