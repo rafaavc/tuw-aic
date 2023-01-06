@@ -8,8 +8,8 @@ export type TaxiData = {
 
 export type IndividualTaxiData = {
   number: TaxiNumber
-  distance: Float
-  averageSpeed: Float
+  distance: Float | null
+  averageSpeed: Float | null
   location: TaxiLocation
 }
 

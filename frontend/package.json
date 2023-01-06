@@ -14,6 +14,7 @@
   "dependencies": {
     "@stomp/stompjs": "^6.1.2",
     "bootstrap": "^5.2.3",
+    "floating-vue": "^2.0.0-beta.20",
     "rxjs": "^7.8.0",
     "sockjs-client": "^1.6.1",
     "vue": "^3.2.45",
