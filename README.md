@@ -18,6 +18,8 @@
 - **common** - Shared data structures and utilities
 - **consumer** - Apache Storm nimbus, UI and topology submission
 - **example** - Initial repository structure given by course organizers
+- **frontend** - Frontend for the service interface
+- **interface-server** - Backend for the service interface (reads data from the database, receives notification HTTP requests)
 - **kafka** - Apache Kafka container build configuration
 - **producer** - Apache Kafka data seeder
 - **redis** - Redis container build configuration
@@ -65,6 +67,12 @@ Last updated: 12/12/2022
   - Receives tasks from nimbus on `consumer:6627`
   - Reads data from topic `"taxi"` on `kafka:9092`
   - Writes data to `redis:6279`
+- `interface-server`:
+  - Receives HTTP POST requests on `http://interface-server:10002/notification/speeding` and `http://interface-server:10002/notification/leaving-area`.
+  - Exposes WebSocket STOMP connection on `http://interface-server:10002/ws`.
+  - Every 5s reads taxi information from Redis and publishes it on WebSocket STOMP topic `/topic/taxis`.
+  - Publishes speeding notifications on WebSocket STOMP topic `/topic/notifications/speeding`.
+  - Publishes leaving area notifications on WebSocket STOMP topic `/topic/notifications/leaaving-area`.
 
 ## Components
 
@@ -80,6 +88,7 @@ Last updated: 12/12/2022
     - Bolts - Data transformers which process data from other spouts and bolts
     - Redis sink - Writes entries to `redis` according to its connected input bolts
 - `supervisor` - The Apache Storm supervisor which provides workers for processing the topology
+- `interface-server` - Backend for the service interface.
 
 ## How to run
 
@@ -93,6 +102,11 @@ The following environment variables may be set in the `.env` file:
 - `TAXI_DATA_FOLDER` - The folder containing the taxi seeding data, relative to this folder
 - `TAXI_DATA_SPEED` - The producer submission speed in timestamps per second
 - `NUMBER_TAXIS` - The number of unique taxis submitted by the producer
+- `FORBIDDEN_CITY_LAT` - The latitude of the forbidden city in Beijing
+- `FORBIDDEN_CITY_LON` - The longitude of the forbidden city in Beijing
+- `PREDEFINED_AREA_RADIUS` - The radius around the forbidden city where taxis can drive
+- `PREDEFINED_AREA_DISCARD_RADIUS` - Taxis that drive beyond this radius around the forbidden city are discarded.
+- `PREDEFINED_SPEED_LIMIT` - The speed limit of the taxis
 
 ## How to debug
 

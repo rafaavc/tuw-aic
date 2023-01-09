@@ -25,8 +25,6 @@ public class TaxiDataController {
         public void run() {
             if (template == null) return;
 
-            System.out.println("-> POLLING REDIS :)");
-
             var data = new TaxiData.Builder()
                     .distances(jedis.hgetAll(RedisHashes.R_DISTANCE_HASH))
                     .averageSpeeds(jedis.hgetAll(RedisHashes.R_AVERAGE_SPEED_HASH))
