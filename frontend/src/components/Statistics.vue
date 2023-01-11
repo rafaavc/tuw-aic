@@ -41,7 +41,7 @@ const socket = new WebsocketClient()
 socket.connect().then(() => {
   socket.on(Topic.TAXIS).subscribe((data) => {
     drivingTaxiCount.value = data.amountOfTaxis
-    totalDistance.value = data.totalDistance
+    totalDistance.value = data.totalDistance / 1000
   })
   socket.on(Topic.LEAVING_AREA).subscribe((violation) => {
     const { taxiNumber } = violation

@@ -13,7 +13,7 @@ const projection = ref<string>("EPSG:4326")
 
 const taxis = ref<IndividualTaxiData[]>([])
 const selectedTaxi = ref<IndividualTaxiData>()
-const selectedTaxiDistance = computed(() => selectedTaxi.value?.distance ? rounded(selectedTaxi.value.distance, 2) : 0)
+const selectedTaxiDistance = computed(() => selectedTaxi.value?.distance ? rounded(selectedTaxi.value.distance / 1000, 2) : 0)
 const selectedTaxiAvgSpeed = computed(() => selectedTaxi.value?.averageSpeed ? rounded(selectedTaxi.value.averageSpeed, 2) : 0)
 
 const selectConditions: any = inject("ol-selectconditions")
