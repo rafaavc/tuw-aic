@@ -17,7 +17,6 @@
 
 - **common** - Shared data structures and utilities
 - **consumer** - Apache Storm nimbus, UI and topology submission
-- **example** - Initial repository structure given by course organizers
 - **frontend** - Frontend for the service interface
 - **interface-server** - Backend for the service interface (reads data from the database, receives notification HTTP requests)
 - **kafka** - Apache Kafka container build configuration
