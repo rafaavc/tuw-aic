@@ -127,22 +127,22 @@ Last updated: 14th January 2023
 - **André Mategka**:
   - Apache Zookeeper: setup
   - Apache Storm: nimbus setup, supervisor setup, UI setup
-  - Storm topology: setup, Kafka spout, distance-related bolts, Redis sink
+  - Storm topology: setup, Kafka spout, "Calculate distance" bolt, "Store information" sink
   - Interim Presentation: slides
   - Dashboard frontend: setup, statistics
   - Final presentation: slides
 - **Philipp-Lorenz Glaser**:
-  - Storm topology: location-related bolts
+  - Storm topology: "Update taxi location" bolt
   - Dashboard frontend: map
   - Final presentation: demo
 - **Philipp Ginter**:
-  - Storm topology: speed-related bolts
+  - Storm topology: "Calculate speed" bolt, "Calculate average speed" bolt
   - Interim presentation: demo preparation, demo
 - **Rafael Cristino**:
   - Project structure: setup
   - Apache Kafka: setup
   - Redis: setup
-  - Storm topology: notification sinks
+  - Storm topology: notification sinks ("Notify dashboard once if a taxi is &hellip;")
   - Dashboard backend: implementation
   - Final presentation: demo
 - **Xavier Pisco**:
