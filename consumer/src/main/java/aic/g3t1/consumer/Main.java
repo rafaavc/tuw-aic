@@ -1,6 +1,6 @@
 package aic.g3t1.consumer;
 
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import aic.g3t1.consumer.redis.operation.IncrementDistanceOperation;
 import aic.g3t1.consumer.redis.operation.SetAverageSpeedOperation;
 import aic.g3t1.consumer.redis.operation.UpdateLocationOperation;
@@ -18,6 +18,7 @@ public class Main {
             topology.submit(getConfig());
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -29,7 +30,7 @@ public class Main {
         config.registerSerialization(SetAverageSpeedOperation.class);
         config.registerSerialization(UpdateLocationOperation.class);
         config.setDebug(true);
-        config.setNumWorkers(3);
+        config.setNumWorkers(5);
         return config;
     }
 

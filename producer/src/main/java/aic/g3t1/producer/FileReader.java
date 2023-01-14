@@ -1,6 +1,6 @@
 package aic.g3t1.producer;
 
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

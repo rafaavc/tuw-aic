@@ -1,10 +1,9 @@
 package aic.g3t1.consumer.redis.operation;
 
+import aic.g3t1.common.redis.RedisHashes;
 import redis.clients.jedis.JedisCommands;
 
 public class IncrementDistanceOperation implements RedisOperation {
-
-    public static final String R_DISTANCE_HASH = "distance";
     private static final long serialVersionUID = -5613982850836152034L;
 
     private final Integer taxiNumber;
@@ -23,7 +22,7 @@ public class IncrementDistanceOperation implements RedisOperation {
 
     @Override
     public void perform(JedisCommands commands) {
-        commands.hincrByFloat(R_DISTANCE_HASH, String.valueOf(taxiNumber), distance);
+        commands.hincrByFloat(RedisHashes.R_DISTANCE_HASH, String.valueOf(taxiNumber), distance);
     }
 
     @Override

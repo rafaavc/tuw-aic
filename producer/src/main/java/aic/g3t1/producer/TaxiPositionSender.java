@@ -1,6 +1,6 @@
 package aic.g3t1.producer;
 
-import aic.g3t1.common.taxiposition.TaxiPosition;
+import aic.g3t1.common.model.taxiposition.TaxiPosition;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
@@ -36,7 +36,7 @@ public class TaxiPositionSender implements Runnable {
             producer.send(record);
             positionsSent++;
         }
-        System.out.println("Sent positions with timestamp = " + nextTimestamp);
+        //System.out.println("Sent positions with timestamp = " + nextTimestamp);
 
         if (positionsSent >= taxiPositions.size()) {
             System.out.println("All available taxi positions were sent, closing.");

@@ -2,6 +2,7 @@ version: "3"
 
 services:
   kafka:
+    container_name: aic-kafka
     build: kafka
     depends_on:
       - zookeeper
@@ -15,6 +16,7 @@ services:
       - storm
 
   producer:
+    container_name: aic-producer
     build:
       context: .
       dockerfile: producer/Dockerfile
@@ -30,8 +32,8 @@ services:
       TAXI_DATA_SPEED: ${TAXI_DATA_SPEED}
       NUMBER_TAXIS: ${NUMBER_TAXIS}
 
-
   consumer:
+    container_name: aic-consumer
     build:
       context: .
       dockerfile: consumer/Dockerfile
@@ -39,25 +41,34 @@ services:
       - zookeeper
       - kafka
       - redis
+      - interface-server
     networks:
       - storm
     environment:
+      WAIT_ZOOKEEPER: zookeeper:2181
       KAFKA_BOOTSTRAP_SERVER: kafka:9092
       KAFKA_GROUP_ID: ${KAFKA_GROUP_ID}
       REDIS_HOST: redis:6379
+      NOTIFICATION_SPEEDING_ENDPOINT: http://interface-server:8080/notification/speeding
+      NOTIFICATION_LEAVING_AREA_ENDPOINT: http://interface-server:8080/notification/leaving-area
+      FORBIDDEN_CITY_LAT: ${FORBIDDEN_CITY_LAT}
+      FORBIDDEN_CITY_LON: ${FORBIDDEN_CITY_LON}
+      PREDEFINED_AREA_RADIUS: ${PREDEFINED_AREA_RADIUS}
+      PREDEFINED_SPEED_LIMIT: ${PREDEFINED_SPEED_LIMIT}
     ports:
       - '8080:8080' # Storm UI
 
   zookeeper:
+    container_name: aic-zookeeper
     image: 'bitnami/zookeeper:latest'
     platform: linux/amd64
-    container_name: zookeeper
     environment:
       ALLOW_ANONYMOUS_LOGIN: yes
     networks:
       - storm
 
   storm-supervisor:
+    container_name: aic-supervisor
     build: storm-supervisor
     platform: linux/amd64
     depends_on:
@@ -65,28 +76,50 @@ services:
       - consumer
     networks:
       - storm
+      - web-backend
     environment:
+      WAIT_ZOOKEEPER: zookeeper:2181
       WAIT_NIMBUS: consumer:6627
 
-  redis:
-    container_name: redis
+  interface-server:
+    container_name: aic-interface-server
     build:
-      context: ./redis
+      context: .
+      dockerfile: interface-server/Dockerfile
+    depends_on:
+      - redis
+    networks:
+      - web-backend
+      - web-frontend
+    ports:
+      - "10002:8080"
+    environment:
+      REDIS_HOST: redis:6379
+      CORS_ORIGIN: ${INTERFACE_SERVER_CORS_ORIGIN}
+      FORBIDDEN_CITY_LAT: ${FORBIDDEN_CITY_LAT}
+      FORBIDDEN_CITY_LON: ${FORBIDDEN_CITY_LON}
+      PREDEFINED_AREA_DISCARD_RADIUS: ${PREDEFINED_AREA_DISCARD_RADIUS}
+
+  redis:
+    container_name: aic-redis
+    build: redis
+#    ports:
+#      - '6379:6379' # Local inspection
     networks:
       - storm
-#    ports:
-#      - 6379:6379
+      - web-backend
 
-#  redis-example:
-#    build:
-#      context: .
-#      dockerfile: ./redis-example/Dockerfile
-#    depends_on:
-#      - redis
-#    networks:
-#      - storm
-#    environment:
-#      REDIS_HOST: redis:6379
+  frontend:
+    container_name: aic-frontend
+    build: frontend
+    depends_on:
+      - interface-server
+    ports:
+      - '8081:8081'
+    networks:
+      - web-frontend
 
 networks:
   storm:
+  web-backend:
+  web-frontend:
