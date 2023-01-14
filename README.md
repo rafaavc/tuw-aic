@@ -26,24 +26,32 @@
 
 ### Work Distribution
 
-Last updated: 12/12/2022
+Last updated: 14th January 2023
 
 - **André Mategka**:
   - Apache Zookeeper: setup
   - Apache Storm: nimbus setup, supervisor setup, UI setup
-  - Storm topology: setup, Kafka spout, distance-related bolts
+  - Storm topology: setup, Kafka spout, distance-related bolts, Redis sink
   - Interim Presentation: slides
+  - Dashboard frontend: setup, statistics
+  - Final presentation: slides
 - **Philipp-Lorenz Glaser**:
   - Storm topology: location-related bolts
+  - Dashboard frontend: map
+  - Final presentation: demo
 - **Philipp Ginter**:
   - Storm topology: speed-related bolts
-  - Interim Presentation: demo
+  - Interim presentation: demo preparation, demo
 - **Rafael Cristino**:
   - Project structure: setup
   - Apache Kafka: setup
   - Redis: setup
+  - Storm topology: notification sinks
+  - Dashboard backend: implementation
+  - Final presentation: demo
 - **Xavier Pisco**:
   - Data provider: implementation
+  - Final presentation: demo preparation, demo
 
 ## Architecture
 
