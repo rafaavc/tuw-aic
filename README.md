@@ -1,4 +1,3 @@
-
 ![DSG](./example/docs/dsg_logo.png)
 
 # Advanced Internet Computing WS 2022 - Group 3 Topic 1
@@ -106,6 +105,8 @@ The following environment variables may be set in the `.env` file:
 - `PREDEFINED_AREA_RADIUS` - The radius around the forbidden city where taxis can drive
 - `PREDEFINED_AREA_DISCARD_RADIUS` - Taxis that drive beyond this radius around the forbidden city are discarded.
 - `PREDEFINED_SPEED_LIMIT` - The speed limit of the taxis
+
+Other environment variables must be left as-is.
 
 ## How to debug
 
