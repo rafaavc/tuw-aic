@@ -74,11 +74,16 @@ Last updated: 14th January 2023
   - Reads data from topic `"taxi"` on `kafka:9092`
   - Writes data to `redis:6279`
 - `interface-server`:
-  - Receives HTTP POST requests on `http://interface-server:10002/notification/speeding` and `http://interface-server:10002/notification/leaving-area`.
-  - Exposes WebSocket STOMP connection on `http://interface-server:10002/ws`.
-  - Every 5s reads taxi information from Redis and publishes it on WebSocket STOMP topic `/topic/taxis`.
-  - Publishes speeding notifications on WebSocket STOMP topic `/topic/notifications/speeding`.
-  - Publishes leaving area notifications on WebSocket STOMP topic `/topic/notifications/leaaving-area`.
+  - Receives HTTP POST requests on port `10002` and paths `/notification/speeding` and `/notification/leaving-area`
+  - Exposes WebSocket STOMP endpoint on port `10002` and path `/ws`
+  - Every 5s, reads taxi information from Redis and publishes it on WebSocket STOMP topic `/topic/taxis`
+  - Publishes speeding notifications on WebSocket STOMP topic `/topic/notifications/speeding`
+  - Publishes leaving area notifications on WebSocket STOMP topic `/topic/notifications/leaving-area`
+- `frontend`:
+  - Exposes a web application on port `8081` which shows overall statistics and a map of driving taxis
+  - Connects to WebSocket STOMP endpoint on `interface-server:10002`
+  - Subscribes to topics `/topic/taxis`, `/topic/notifications/speeding` and `/topic/notifications/leaving-area`
+  - Uses [OpenStreetMap](https://www.openstreetmap.org/) for its map data
 
 ## Components
 
@@ -94,7 +99,8 @@ Last updated: 14th January 2023
     - Bolts - Data transformers which process data from other spouts and bolts
     - Redis sink - Writes entries to `redis` according to its connected input bolts
 - `supervisor` - The Apache Storm supervisor which provides workers for processing the topology
-- `interface-server` - Backend for the service interface.
+- `interface-server` - The Spring dashboard backend which serves as the interface between Storm/Redis and the frontend
+- `frontend` - The Vue dashboard frontend which visualizes the data received from the backend
 
 ## How to run
 
