@@ -17,6 +17,28 @@ This section contains all the key submission details
 
 ### Project Description
 
+This project contains all the components necessary for a taxi service
+simulation using stream processing technologies.
+
+A data producer reads in
+taxi driving data from a research data set and submits it to an Apache Kafka
+instance with configurable parameters (speed and amount).
+
+An Apache Storm cluster consisting of a nimbus, supervisor and UI instance is
+used to process this data. Workers process a topology which first reads in data
+from Apache Kafka, transforms and filters the resulting tuples using stream
+processing operators (called bolts), emits notifications for detected
+violations and updates a Redis key-value store.
+
+A Spring backend server receives the notifications from the Storm cluster and
+periodically polls the Redis store for updated information.
+The combined information is then emitted via a WebSocket interface.
+
+The dashboard, realized with Vue and Nginx, connects to the backend server and
+receives the WebSocket data. This information is visualized using an
+interactive map displaying all taxi locations, as well as simple
+textual statistics.
+
 ### Testing Environment
 
 This project was tested exclusively on local hardware.
