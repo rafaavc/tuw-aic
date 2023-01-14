@@ -19,7 +19,7 @@ const showAllSpeedingIncidents = ref(false)
 const avLimit = computed(() => showAllAreaViolations.value ? -1 : DISPLAY_LIMIT)
 const siLimit = computed(() => showAllSpeedingIncidents.value ? -1 : DISPLAY_LIMIT)
 const areaViolationsDisplayed = computed(() => sortByTimestamps(areaViolations, avLimit.value))
-const speedingIncidentsDisplayed = computed(() => sortByTimestamps(areaViolations, siLimit.value))
+const speedingIncidentsDisplayed = computed(() => sortByTimestamps(speedingIncidents, siLimit.value))
 
 const dateFormatter = new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeStyle: 'medium' } as any)
 
