@@ -67,6 +67,17 @@ This project was tested exclusively on local hardware.
 |        Storage | 500 GB                                                                   |
 |       Browsers | Firefox 108.0.2                                                          |
 
+|                | Environment #3                                                           |
+|---------------:|:-------------------------------------------------------------------------|
+|           Name | Rafael Cristino                                                          |
+|             OS | Pop!_OS 22.04 (linux kernel 6.0.12-76060006-generic)                     |
+|         Docker | Version 20.10.22                                                         |
+| Docker Compose | Version 2.14.1                                                           |
+|      Processor | Intel Core i5-8250U                                                      |
+|         Memory | 16 GiB                                                                   |
+|        Storage | 256 GB                                                                   |
+|       Browsers | Firefox 108.0                                                            |
+
 You can view the most recent protocol for our manual system tests in the
 [SYSTEM_TESTS.md](SYSTEM_TESTS.md).
 
