@@ -56,6 +56,9 @@ This project was tested exclusively on local hardware.
 |        Storage | 500 GB (for WSL 2)                                                       |
 |       Browsers | Google Chrome 108.0.5359.126, Microsoft Edge 108.0.1462.76               |
 
+You can view the most recent protocol for our manual system tests in the
+[SYSTEM_TESTS.md](SYSTEM_TESTS.md).
+
 ### User Instructions
 
 #### 1. Requirements
