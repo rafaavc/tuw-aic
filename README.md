@@ -147,7 +147,7 @@ docker compose up -d --force-recreate
 
 ### Member Contributions
 
-Last updated: 14th January 2023
+Last updated: 16th January 2023
 
 - **André Mategka**:
   - Apache Zookeeper: setup
@@ -159,10 +159,12 @@ Last updated: 14th January 2023
 - **Philipp-Lorenz Glaser**:
   - Storm topology: "Update taxi location" bolt
   - Dashboard frontend: map
+  - Benchmarking & optimization: support
   - Final presentation: demo
 - **Philipp Ginter**:
   - Storm topology: "Calculate speed" bolt, "Calculate average speed" bolt
   - Interim presentation: demo preparation, demo
+  - Benchmarking & optimization: lead
 - **Rafael Cristino**:
   - Project structure: setup
   - Apache Kafka: setup
@@ -172,6 +174,7 @@ Last updated: 14th January 2023
   - Final presentation: demo
 - **Xavier Pisco**:
   - Data provider: implementation
+  - Benchmarking & optimization: support
   - Final presentation: demo preparation, demo
 
 ## Additional Details
