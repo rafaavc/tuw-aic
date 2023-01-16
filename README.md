@@ -78,6 +78,17 @@ This project was tested exclusively on local hardware.
 |        Storage | 256 GB                                                                   |
 |       Browsers | Firefox 108.0                                                            |
 
+|                | Environment #4                                                           |
+|---------------:|:-------------------------------------------------------------------------|
+|           Name | Xavier Pisco                                                          |
+|             OS | ArcoLinux (linux kernel 6.1.6)                     |
+|         Docker | Version 20.10.22                                                         |
+| Docker Compose | Version 2.14.2                                                           |
+|      Processor | Intel Core i7-7700HQ                                                      |
+|         Memory | 32 GiB                                                                   |
+|        Storage | 256 GB                                                                   |
+|       Browsers | Firefox 108.0.2                                                            |
+
 You can view the most recent protocol for our manual system tests in the
 [SYSTEM_TESTS.md](SYSTEM_TESTS.md).
 
