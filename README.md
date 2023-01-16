@@ -56,6 +56,17 @@ This project was tested exclusively on local hardware.
 |        Storage | 500 GB (for WSL 2)                                                       |
 |       Browsers | Google Chrome 108.0.5359.126, Microsoft Edge 108.0.1462.76               |
 
+|                | Environment #2                                                           |
+|---------------:|:-------------------------------------------------------------------------|
+|           Name | Philipp-Lorenz Glaser                                                    |
+|             OS | macOS 12.5                                                               |
+|         Docker | Version 20.10.14                                                         |
+| Docker Compose | Version 1.29.2                                                           |
+|      Processor | Apple M1 Pro                                                             |
+|         Memory | 16 GiB                                                                   |
+|        Storage | 500 GB                                                                   |
+|       Browsers | Firefox 108.0.2                                                          |
+
 You can view the most recent protocol for our manual system tests in the
 [SYSTEM_TESTS.md](SYSTEM_TESTS.md).
 
