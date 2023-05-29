@@ -1,3 +1,11 @@
+# Stream Processing for Spatially-Distributed IoT Systems
+
+Implementation of a data processing pipeline from the Kafka spout to the Storm topology, storing the results from the stream computations in Redis, and finally feeding to a Spring backend that prepares and communicates the data to the frontend through WebSockets, where it is displayed in real-time.
+
+![Dashboard](./dashboard.png)
+
+---
+
 ![DSG](./dsg_logo.png)
 
 # Advanced Internet Computing WS 2022 - Group 3 Topic 1
